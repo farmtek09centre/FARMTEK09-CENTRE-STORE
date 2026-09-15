@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout - Farmtek09Centre</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="checkout.css">
+</head>
+<body>
+
+  <nav class="navbar">
+    <ul>
+      <li><a href="index.html#hero">Home</a></li>
+      <li><a href="index.html#products">Products</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="checkout-wrap">
+    <div class="checkout-steps">
+      <span id="step-cart" class="active">1. Cart</span> →
+      <span id="step-details">2. Details</span> →
+      <span id="step-receipt">3. Receipt</span>
+    </div>
+
+    <!-- Order + form (hidden after successful submit) -->
+    <div id="checkout-form-area">
+      <div class="checkout-section">
+        <h2>Order Summary</h2>
+        <div id="order-lines"></div>
+        <div id="order-empty" class="checkout-empty-note" style="display:none;">
+          Your cart is empty. <a href="index.html#products" style="color:#00cc44;">Browse seedlings</a>.
+        </div>
+        <div class="order-total">
+          <span>Total</span>
+          <span id="order-total-amount">KES 0</span>
+        </div>
+      </div>
+
+      <form id="checkout-form" class="checkout-section">
+        <h2>Your Details</h2>
+        <div class="ft-form-group">
+          <label for="cust-name">Full name *</label>
+          <input type="text" id="cust-name" required>
+        </div>
+        <div class="ft-form-group">
+          <label for="cust-phone">Phone number *</label>
+          <input type="tel" id="cust-phone" placeholder="07XXXXXXXX" required>
+        </div>
+        <div class="ft-form-group">
+          <label for="cust-pin">KRA PIN (optional — for a business buyer's tax record)</label>
+          <input type="text" id="cust-pin" placeholder="A123456789Z">
+        </div>
+
+        <div class="ft-form-group">
+          <label>Delivery</label>
+          <div class="ft-radio-group">
+            <label><input type="radio" name="delivery" value="pickup" checked> Pickup at Lower Kabete</label>
+            <label><input type="radio" name="delivery" value="delivery"> Delivery</label>
+          </div>
+        </div>
+        <div class="ft-form-group" id="delivery-address-group" style="display:none;">
+          <label for="delivery-address">Delivery address</label>
+          <input type="text" id="delivery-address" placeholder="e.g. Kikuyu, Kiambu Rd...">
+        </div>
+
+        <div class="ft-form-group">
+          <label>Payment method</label>
+          <div class="ft-radio-group">
+            <label><input type="radio" name="payment" value="mpesa" checked> M-Pesa (Paybill 400200, Acc 54095)</label>
+            <label><input type="radio" name="payment" value="cash"> Cash</label>
+            <label><input type="radio" name="payment" value="bank"> Bank transfer</label>
+          </div>
+        </div>
+
+        <div class="ft-form-group">
+          <label for="cust-notes">Notes (optional)</label>
+          <textarea id="cust-notes" rows="2"></textarea>
+        </div>
+
+        <button type="submit" class="checkout-submit-btn" id="submit-btn">Confirm Order</button>
+        <div id="checkout-error" class="checkout-error" style="display:none;"></div>
+      </form>
+    </div>
+
+    <!-- Receipt (shown after successful submit) -->
+    <div id="receipt-area" style="display:none;"></div>
+  </div>
+
+  <footer>
+    <p>© 2025 Farmtek09Centre – Lower Kabete</p>
+  </footer>
+
+  <script src="products.js"></script>
+  <script src="cart.js" defer></script>
+  <script>
+    // Point this at your deployed checkout server (see /server/README.md).
+    // Left as localhost until you deploy — the page still works without
+    // it, it just falls back to an unregistered "provisional" receipt.
+    const API_BASE = "http://localhost:5000";
+
+    document.addEventListener("DOMContentLoaded", () => {
+      renderOrderSummary();
+
+      document.querySelectorAll('input[name="delivery"]').forEach((r) => {
+        r.addEventListener("change", () => {
+          document.getElementById("delivery-address-group").style.display =
+            document.querySelector('input[name="delivery"]:checked').value === "delivery" ? "block" : "none";
+        });
+      });
+
+      document.getElementById("checkout-form").addEventListener("submit", onSubmit);
+    });
+
+    function renderOrderSummary() {
+      const lines = window.FarmtekCart ? window.FarmtekCart.lines() : [];
+      const linesEl = document.getElementById("order-lines");
+      const emptyEl = document.getElementById("order-empty");
+      const totalEl = document.getElementById("order-total-amount");
+      const submitBtn = document.getElementById("submit-btn");
+
+      if (lines.length === 0) {
+        linesEl.innerHTML = "";
+        emptyEl.style.display = "block";
+        submitBtn.disabled = true;
+      } else {
+        emptyEl.style.display = "none";
+        submitBtn.disabled = false;
+        linesEl.innerHTML = lines
+          .map(
+            (l) => `<div class="order-line"><span>${l.product.name} × ${l.qty}</span><span>${window.FarmtekCart.formatKES(l.lineTotal)}</span></div>`
+          )
+          .join("");
+      }
+      totalEl.textContent = window.FarmtekCart ? window.FarmtekCart.formatKES(window.FarmtekCart.subtotal()) : "KES 0";
+    }
+
+    // cart.js renders asynchronously on DOMContentLoaded too; re-render once it's ready.
+    window.addEventListener("load", renderOrderSummary);
+
+    async function onSubmit(e) {
+      e.preventDefault();
+      const errorEl = document.getElementById("checkout-error");
+      errorEl.style.display = "none";
+      const submitBtn = document.getElementById("submit-btn");
+
+      const lines = window.FarmtekCart.lines();
+      if (lines.length === 0) return;
+
+      const payload = {
+        customer: {
+          name: document.getElementById("cust-name").value.trim(),
+          phone: document.getElementById("cust-phone").value.trim(),
+          pin: document.getElementById("cust-pin").value.trim() || null,
+        },
+        delivery: {
+          method: document.querySelector('input[name="delivery"]:checked').value,
+          address: document.getElementById("delivery-address").value.trim() || null,
+        },
+        paymentMethod: document.querySelector('input[name="payment"]:checked').value,
+        notes: document.getElementById("cust-notes").value.trim() || null,
+        items: lines.map((l) => ({ id: l.product.id, qty: l.qty })),
+      };
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Placing order...";
+
+      try {
+        const res = await fetch(API_BASE + "/api/checkout", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Checkout server rejected the order.");
+        showReceipt(data, false);
+      } catch (err) {
+        // Server not reachable (not deployed yet) or it errored — keep the
+        // flow usable with an honest, clearly-labelled provisional receipt.
+        showReceipt(buildFallbackReceipt(payload, lines), true);
+      }
+    }
+
+    function buildFallbackReceipt(payload, lines) {
+      const subtotal = lines.reduce((s, l) => s + l.lineTotal, 0);
+      return {
+        business: { name: "FARMTEK09 CENTRE", pin: null, address: "Lower Kabete, Nairobi", phone: "0725528888" },
+        receiptNo: "PENDING",
+        receiptLabel: "—",
+        dateTime: new Date().toLocaleString("en-KE"),
+        customer: payload.customer,
+        items: lines.map((l) => ({ name: l.product.name, qty: l.qty, unit: l.product.unit, price: l.product.price, lineTotal: l.lineTotal })),
+        subtotal: subtotal,
+        taxTotal: 0,
+        total: subtotal,
+        paymentMethod: payload.paymentMethod,
+        etims: { configured: false },
+      };
+    }
+
+    function showReceipt(data, provisional) {
+      document.getElementById("checkout-form-area").style.display = "none";
+      document.getElementById("step-cart").classList.remove("active");
+      document.getElementById("step-details").classList.remove("active");
+      document.getElementById("step-receipt").classList.add("active");
+
+      const el = document.getElementById("receipt-area");
+      el.style.display = "block";
+
+      const b = data.business || {};
+      const c = data.customer || {};
+      const etims = data.etims || { configured: false };
+
+      const banner = provisional
+        ? `<div class="receipt-banner">⚠ Checkout server not reachable — this is a provisional record only, not a valid tax receipt. Deploy the backend in /server to issue real receipts (see /server/README.md).</div>`
+        : !etims.configured
+        ? `<div class="receipt-banner">⚠ eTIMS is not configured yet on the server — this sale was recorded, but not submitted to KRA. See /server/README.md.</div>`
+        : "";
+
+      el.innerHTML = `
+        ${banner}
+        <div class="receipt-card">
+          <div class="receipt-header">
+            <h3>${b.name || "FARMTEK09 CENTRE"}</h3>
+            <p>${b.address || "Lower Kabete, Nairobi"}</p>
+            <p>Tel: ${b.phone || "0725528888"}</p>
+            <p>PIN: ${b.pin || "(not set)"}</p>
+          </div>
+          <div class="receipt-meta">
+            <p>Receipt No: ${data.receiptNo}</p>
+            <p>Type: ${data.receiptLabel}</p>
+            <p>Date: ${data.dateTime}</p>
+            <p>Served to: ${c.name || ""} (${c.phone || ""})</p>
+            ${c.pin ? `<p>Buyer PIN: ${c.pin}</p>` : ""}
+          </div>
+          <div class="receipt-divider"></div>
+          ${data.items
+            .map(
+              (i) => `<div class="receipt-line"><span>${i.name} x${i.qty}</span><span>${window.FarmtekCart.formatKES(i.lineTotal)}</span></div>`
+            )
+            .join("")}
+          <div class="receipt-divider"></div>
+          <div class="receipt-line"><span>Subtotal</span><span>${window.FarmtekCart.formatKES(data.subtotal)}</span></div>
+          <div class="receipt-line"><span>Tax</span><span>${window.FarmtekCart.formatKES(data.taxTotal)}</span></div>
+          <div class="receipt-total"><span>Total</span><span>${window.FarmtekCart.formatKES(data.total)}</span></div>
+          <p style="font-size:0.8rem; margin-top:0.5rem;">Payment: ${data.paymentMethod}</p>
+          <div class="receipt-etims">
+            ${
+              etims.configured
+                ? `KRA Invoice No: ${etims.kraInvoiceNo}<br>SCU ID: ${etims.scuId}<br>Signature: ${etims.signature}`
+                : "eTIMS: not yet registered with KRA for this sale."
+            }
+          </div>
+          <div class="receipt-footer">Thank you for shopping with Farmtek09Centre.</div>
+        </div>
+        <div class="receipt-actions">
+          <button type="button" onclick="window.print()">Print Receipt</button>
+          <button type="button" onclick="startNewOrder()">New Order</button>
+        </div>
+      `;
+    }
+
+    function startNewOrder() {
+      window.FarmtekCart.clear();
+      window.location.href = "index.html";
+    }
+  </script>
+
+</body>
+</html>

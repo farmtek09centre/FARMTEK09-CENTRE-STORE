@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Farmtek09Centre - Home</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="checkout.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <ul>
+      <li><a href="#hero">Home</a></li>
+      <li><a href="#products">Products</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="hero" class="hero fade-in">
+    <div class="hero-overlay">
+      <h1 class="display-3">Farmtek09Centre</h1>
+      <p>Premium TC Bananas, Fruit Trees & Ornamental Flowers – Located in Lower Kabete</p>
+    </div>
+  </section>
+
+  <!-- Products Section -->
+  <section id="products" class="container fade-in">
+    <h2 style="text-align:center; margin-bottom:2rem;">Our Premium Seedlings</h2>
+    <div class="products">
+
+      <div class="product-card" data-product-id="grandnain">
+        <a href="details-grandnain.html" class="bubble fade-in">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Banana_tree.jpg" alt="Grand Nain Banana">
+        <h3>Grand Nain</h3>
+      </a>
+      </div>
+
+      <div class="product-card" data-product-id="williams">
+        <a href="details-williams.html" class="bubble fade-in">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/f/fc/Banana_Plant_tree.jpg" alt="Williams Hybrid Banana">
+        <h3>Williams Hybrid</h3>
+      </a>
+      </div>
+
+      <div class="product-card" data-product-id="fhia17">
+        <a href="details-fhia17.html" class="bubble fade-in">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Banana_tree_fruit.jpg" alt="FHIA-17 Banana">
+        <h3>FHIA-17</h3>
+      </a>
+      </div>
+
+      <div class="product-card" data-product-id="cavendish">
+        <a href="details-cavendish.html" class="bubble fade-in">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Banana_tree_with_bunch.jpg" alt="Giant Cavendish Banana">
+        <h3>Giant Cavendish</h3>
+      </a>
+      </div>
+
+      <div class="product-card" data-product-id="lemon">
+        <a href="details-lemon.html" class="bubble fade-in">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/0c/Lemon_tree.jpg" alt="Lemon Tree">
+        <h3>Lemon</h3>
+      </a>
+      </div>
+
+      <div class="product-card" data-product-id="tangerine">
+        <a href="details-tangerine.html" class="bubble fade-in">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Tangerine_tree.jpg" alt="Tangerine Tree">
+        <h3>Tangerine</h3>
+      </a>
+      </div>
+
+      <div class="product-card" data-product-id="apple">
+        <a href="details-apple.html" class="bubble fade-in">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Apple_tree.jpg" alt="Apple Tree">
+        <h3>Apple</h3>
+      </a>
+      </div>
+
+      <div class="product-card" data-product-id="grape">
+        <a href="details-grape.html" class="bubble fade-in">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/9/9f/Grapevine.jpg" alt="Grape Vines">
+        <h3>Grapes</h3>
+      </a>
+      </div>
+
+      <div class="product-card" data-product-id="mango">
+        <a href="details-mango.html" class="bubble fade-in">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/59/Mango_tree.jpg" alt="Mango Tree">
+        <h3>Mango</h3>
+      </a>
+      </div>
+
+      <div class="product-card" data-product-id="avocado">
+        <a href="details-avocado.html" class="bubble fade-in">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/3/3b/Avocado_tree.jpg" alt="Avocado Tree">
+        <h3>Avocado</h3>
+      </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="contact fade-in">
+    <h2>Contact Us</h2>
+    <p>Have questions or want to place an order? Reach out today.</p>
+    <p><i class="fa fa-phone"></i> 0725528888 / 0725679016</p>
+    <p><i class="fa fa-envelope"></i> farmtek09centre@gmail.com</p>
+    <p><i class="fa fa-envelope"></i> bakaryfarm@gmail.com</p>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Farmtek09Centre – Lower Kabete</p>
+  </footer>
+
+  <!-- Scroll Animation Script -->
+  <script>
+    const faders = document.querySelectorAll('.fade-in');
+    const appearOptions = {
+      threshold: 0.1,
+      rootMargin: "0px 0px -50px 0px"
+    };
+
+    const appearOnScroll = new IntersectionObserver(function(entries, observer) {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('appear');
+        observer.unobserve(entry.target);
+      });
+    }, appearOptions);
+
+    faders.forEach(fader => {
+      appearOnScroll.observe(fader);
+    });
+  </script>
+
+  <script src="products.js"></script>
+  <script src="cart.js" defer></script>
+</body>
+</html>

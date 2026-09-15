@@ -1,0 +1,170 @@
+/* General Styling */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  background: #000;
+  color: #fff;
+  scroll-behavior: smooth;
+}
+
+header, footer {
+  text-align: center;
+  padding: 1rem;
+}
+
+/* Navbar */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: #111;
+  padding: 0.8rem;
+  z-index: 1000;
+}
+.navbar ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+}
+.navbar a {
+  color: #00cc44;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+.navbar a:hover {
+  color: #fff;
+}
+.hero {
+  margin-top: 60px;
+}
+
+/* Hero Section */
+.hero {
+  background-image: url('https://images.unsplash.com/photo-1501004318641-b39e6451bec6');
+  background-size: cover;
+  background-position: center;
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+}
+.hero-overlay {
+  background: rgba(0, 100, 0, 0.8);
+  padding: 2rem;
+  border-radius: 1rem;
+}
+
+/* Sections */
+.container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 2rem;
+}
+h2 {
+  color: #00cc44;
+}
+
+/* Product Bubbles */
+.products {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+}
+.bubble {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid #00cc44;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  text-align: center;
+  color: #fff;
+  text-decoration: none;
+  background: #111;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  position: relative;
+}
+.bubble img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  z-index: 0;
+  transition: opacity 0.4s ease;
+}
+.bubble h3 {
+  position: relative;
+  z-index: 1;
+  background: rgba(0,0,0,0.6);
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  color: #00cc44;
+}
+.bubble:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 25px rgba(0, 204, 68, 0.8);
+}
+.bubble:hover img {
+  opacity: 0.8;
+}
+
+/* Contact Section */
+.contact {
+  background: #006400;
+  color: white;
+  text-align: center;
+  padding: 2rem;
+}
+.contact h2 {
+  color: #fff;
+}
+
+/* Footer */
+footer {
+  background: #000;
+  color: #00cc44;
+  padding: 1rem;
+}
+
+/* Scroll Animations */
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+.fade-in.appear {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Back Button */
+.btn-back {
+  display: inline-block;
+  margin-top: 2rem;
+  padding: 12px 24px;
+  border: 2px solid #00cc44;
+  background: transparent;
+  color: #00cc44;
+  text-decoration: none;
+  border-radius: 30px;
+  transition: all 0.3s ease;
+}
+.btn-back:hover {
+  background: #00cc44;
+  color: #000;
+}
