@@ -26,3 +26,13 @@
 .cart-button span{background:#22a052!important}
 .payment-option.selected{border-color:#15803d!important;box-shadow:0 0 0 2px rgba(21,128,61,.10)!important}
 .payment-option input,.delivery-option input{accent-color:#15803d!important}
+
+/* Farmtek09 header logo visibility */
+.topbar-inner{height:112px!important}
+.brand-logo{width:112px!important;height:112px!important;display:flex;align-items:center;flex:none}
+.brand-logo-img{width:112px!important;height:112px!important;display:block;object-fit:contain;object-position:center}
+@media(max-width:650px){
+  .topbar-inner{height:92px!important}
+  .brand-logo,.brand-logo-img{width:92px!important;height:92px!important}
+  .top-actions{gap:8px}
+}
