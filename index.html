@@ -15,7 +15,10 @@
   <header class="topbar">
     <div class="topbar-inner">
       <span class="brand">FARMTEK09 CENTRE</span>
-      <a class="topbar-whatsapp" id="topbarWhatsapp" href="#" target="_blank" rel="noopener"></a>
+      <div class="topbar-actions">
+        <button id="cartOpen" class="topbar-cart" type="button" aria-label="Open cart">🛒 <span id="cartBadge" hidden>0</span></button>
+        <a class="topbar-whatsapp" id="topbarWhatsapp" href="#" target="_blank" rel="noopener"></a>
+      </div>
     </div>
   </header>
 
@@ -103,6 +106,7 @@
   <a href="#" id="floatingWhatsapp" class="floating-whatsapp" target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp"></a>
 
   <script src="products.js"></script>
+  <script src="checkout.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
