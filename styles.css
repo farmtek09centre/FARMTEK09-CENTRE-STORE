@@ -17,3 +17,12 @@
 .checkout-kicker{display:block;color:var(--pink);font-size:.72rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-bottom:4px}.payment-choice{display:grid;gap:10px;margin:20px 0}.payment-choice>strong{font-size:14px}.payment-option{display:flex;align-items:flex-start;gap:10px;border:1px solid var(--line);border-radius:12px;padding:12px;cursor:pointer;background:#fff}.payment-option.selected{border-color:var(--violet);box-shadow:0 0 0 2px rgba(21,128,61,.10)}.payment-option input{margin-top:3px;accent-color:var(--violet)}.payment-option span{display:block}.payment-option b{display:block;margin-bottom:4px}.payment-option small{display:block;color:var(--muted);line-height:1.4}.pod-note{display:grid;gap:4px;margin:14px 0;padding:13px 14px;border:1px solid #d7eadb;border-radius:12px;background:#f2faf4}.pod-note b{color:var(--ink)}.pod-note span{color:var(--muted);font-size:.88rem;line-height:1.45}.bank-details[hidden],#modalContent .hint[hidden]{display:none!important}
 .pod-checkout{background:#eaf7ed;color:var(--violet);border:1px solid #cfe4d4}.pod-checkout:hover{background:#dff2e3}
 .checkout-pricing{border:1px solid var(--line);border-radius:12px;padding:12px;margin:14px 0;background:#f4f9f5}.checkout-pricing>div{display:flex;justify-content:space-between;gap:18px;padding:7px 0}.checkout-total{border-top:1px solid #dbeadf;margin-top:5px;padding-top:11px;font-size:1.05rem}.discount-box{border:1px solid var(--line);border-radius:12px;padding:14px;background:#fff;margin:14px 0}.discount-box label{display:block;font-weight:700;margin:0 0 8px}.discount-box input{margin-top:7px}.discount-box .btn{width:100%}.discount-box .hint{display:block;margin-top:8px}
+/* FARMTEK09 GREEN-ONLY OVERRIDE: no legacy purple/pink styling */
+:root{--violet:#15803d!important;--pink:#22a052!important}
+.primary,.pill.active,.add,.back-to-top,.hero-card,.pay-strip,.toast{background-color:#0b2e18!important;background-image:none!important;color:#fff!important}
+.wa-link,.eyebrow,.card-body small,.footer a,.mini-wa,.pod-checkout{color:#15803d!important}
+.whatsapp,.mini-wa,.pod-checkout{background:#e7f5eb!important;border-color:#cfe4d4!important}
+.search:focus,.product-request input:focus{border-color:#15803d!important;box-shadow:0 0 0 3px rgba(21,128,61,.10)!important}
+.cart-button span{background:#22a052!important}
+.payment-option.selected{border-color:#15803d!important;box-shadow:0 0 0 2px rgba(21,128,61,.10)!important}
+.payment-option input,.delivery-option input{accent-color:#15803d!important}
