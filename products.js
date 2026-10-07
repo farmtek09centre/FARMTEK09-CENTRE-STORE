@@ -11,7 +11,8 @@ const PRODUCTS = [
     "blurb": "Certified tissue-culture banana — disease-free planting material.",
     "image": "https://maxdcnnsthnsxuhurmtm.supabase.co/storage/v1/object/public/product-images/0965940f-d2fc-4e53-9e32-1ae89e46bed4/d8d555b8-8ddf-4290-8f72-3ee3a6009923/GRAND.jpg",
     "unit": "seedling",
-    "stock": 20
+    "stock": 20,
+    "description": "Certified tissue-culture banana — disease-free planting material."
   },
   {
     "id": "williams-tc-banana",
@@ -21,7 +22,8 @@ const PRODUCTS = [
     "blurb": "Certified tissue-culture banana — disease-free planting material.",
     "image": "https://maxdcnnsthnsxuhurmtm.supabase.co/storage/v1/object/public/product-images/0965940f-d2fc-4e53-9e32-1ae89e46bed4/46502379-db4a-412e-a2ce-f6aec897b43f/6001599476675579460_121.jpg",
     "unit": "seedling",
-    "stock": 20
+    "stock": 20,
+    "description": "Certified tissue-culture banana — disease-free planting material."
   },
   {
     "id": "williams-ripening-tc-banana",
@@ -31,7 +33,8 @@ const PRODUCTS = [
     "blurb": "Williams variety, ready for ripening — certified tissue-culture planting material.",
     "image": "https://maxdcnnsthnsxuhurmtm.supabase.co/storage/v1/object/public/product-images/0965940f-d2fc-4e53-9e32-1ae89e46bed4/f7d09518-8595-4753-b027-1dfb93b7fc7e/6001599476675579477_121.jpg",
     "unit": "seedling",
-    "stock": 20
+    "stock": 20,
+    "description": "Williams variety, ready for ripening — certified tissue-culture planting material."
   },
   {
     "id": "giant-cavendish-tc-banana",
@@ -41,7 +44,8 @@ const PRODUCTS = [
     "blurb": "Certified tissue-culture banana — disease-free planting material.",
     "image": "https://maxdcnnsthnsxuhurmtm.supabase.co/storage/v1/object/public/product-images/0965940f-d2fc-4e53-9e32-1ae89e46bed4/e57d5ef3-8b23-4457-846b-2ad30276d4f8/6001599476675579461_121.jpg",
     "unit": "seedling",
-    "stock": 20
+    "stock": 20,
+    "description": "Certified tissue-culture banana — disease-free planting material."
   },
   {
     "id": "fhia17-tc-banana",
@@ -51,7 +55,8 @@ const PRODUCTS = [
     "blurb": "A hardy, disease-resistant banana hybrid — ask us about current availability.",
     "image": "https://upload.wikimedia.org/wikipedia/commons/1/1a/Banana_tree_fruit.jpg",
     "unit": "seedling",
-    "stock": 20
+    "stock": 20,
+    "description": "A hardy, disease-resistant banana hybrid — ask us about current availability."
   },
   {
     "id": "ngombe-cooking-tc-banana",
@@ -61,7 +66,8 @@ const PRODUCTS = [
     "blurb": "Certified tissue-culture banana — disease-free planting material.",
     "image": "https://maxdcnnsthnsxuhurmtm.supabase.co/storage/v1/object/public/product-images/0965940f-d2fc-4e53-9e32-1ae89e46bed4/63c0fa76-68b2-40f7-817b-4d80024980b7/6001599476675579478_121.jpg",
     "unit": "seedling",
-    "stock": 20
+    "stock": 20,
+    "description": "Certified tissue-culture banana — disease-free planting material."
   },
   {
     "id": "nusu-ngombe-tc-banana",
@@ -71,7 +77,8 @@ const PRODUCTS = [
     "blurb": "Certified tissue-culture banana — disease-free planting material.",
     "image": "https://maxdcnnsthnsxuhurmtm.supabase.co/storage/v1/object/public/product-images/0965940f-d2fc-4e53-9e32-1ae89e46bed4/fc4a5588-8ee8-4d70-9a26-2a639b3ffa56/6001599476675579556_121.jpg",
     "unit": "seedling",
-    "stock": 20
+    "stock": 20,
+    "description": "Certified tissue-culture banana — disease-free planting material."
   },
   {
     "id": "plantain-tc-banana",
@@ -81,7 +88,8 @@ const PRODUCTS = [
     "blurb": "Certified tissue-culture plantain — disease-free planting material.",
     "image": "https://maxdcnnsthnsxuhurmtm.supabase.co/storage/v1/object/public/product-images/0965940f-d2fc-4e53-9e32-1ae89e46bed4/906ed70d-ef6f-471c-bb8d-796ee82bfcfe/6001599476675579558_121.jpg",
     "unit": "seedling",
-    "stock": 20
+    "stock": 20,
+    "description": "Certified tissue-culture plantain — disease-free planting material."
   },
   {
     "id": "plantain-tc-banana-2",
@@ -91,7 +99,8 @@ const PRODUCTS = [
     "blurb": "Certified tissue-culture plantain — disease-free planting material.",
     "image": "https://maxdcnnsthnsxuhurmtm.supabase.co/storage/v1/object/public/product-images/0965940f-d2fc-4e53-9e32-1ae89e46bed4/9bc52e59-f1cc-4df8-ad14-ae773f31a4db/6001599476675579479_121.jpg",
     "unit": "seedling",
-    "stock": 20
+    "stock": 20,
+    "description": "Certified tissue-culture plantain — disease-free planting material."
   },
   {
     "id": "uganda-green-tc-banana",
@@ -101,7 +110,8 @@ const PRODUCTS = [
     "blurb": "Certified tissue-culture banana — disease-free planting material.",
     "image": "https://maxdcnnsthnsxuhurmtm.supabase.co/storage/v1/object/public/product-images/0965940f-d2fc-4e53-9e32-1ae89e46bed4/11e4e392-3dc9-4e9e-bc75-bfbc36c108a7/6001599476675579591_121.jpg",
     "unit": "seedling",
-    "stock": 20
+    "stock": 20,
+    "description": "Certified tissue-culture banana — disease-free planting material."
   },
   {
     "id": "vallarey-tc-banana",
@@ -111,7 +121,8 @@ const PRODUCTS = [
     "blurb": "Certified tissue-culture banana — disease-free planting material.",
     "image": "https://maxdcnnsthnsxuhurmtm.supabase.co/storage/v1/object/public/product-images/0965940f-d2fc-4e53-9e32-1ae89e46bed4/5dffa437-7760-4a10-b500-dd025abcea8a/6001599476675579469_121.jpg",
     "unit": "seedling",
-    "stock": 20
+    "stock": 20,
+    "description": "Certified tissue-culture banana — disease-free planting material."
   },
   {
     "id": "apple-grafted-mango",
@@ -121,7 +132,8 @@ const PRODUCTS = [
     "blurb": "Grafted mango seedling — true-to-type and ready for transplanting.",
     "image": "https://maxdcnnsthnsxuhurmtm.supabase.co/storage/v1/object/public/product-images/0965940f-d2fc-4e53-9e32-1ae89e46bed4/f8870c66-2d06-4e99-8b22-631b17684089/6001599476675579476_121.jpg",
     "unit": "seedling",
-    "stock": 20
+    "stock": 20,
+    "description": "Grafted mango seedling — true-to-type and ready for transplanting."
   },
   {
     "id": "tomy-atken-grafted-mango",
@@ -131,7 +143,8 @@ const PRODUCTS = [
     "blurb": "Grafted mango seedling — true-to-type and ready for transplanting.",
     "image": "https://maxdcnnsthnsxuhurmtm.supabase.co/storage/v1/object/public/product-images/0965940f-d2fc-4e53-9e32-1ae89e46bed4/131237e0-bb00-49e8-a226-d4016de4b884/6001599476675579464_121.jpg",
     "unit": "seedling",
-    "stock": 20
+    "stock": 20,
+    "description": "Grafted mango seedling — true-to-type and ready for transplanting."
   },
   {
     "id": "hass-grafted-avocado",
@@ -141,7 +154,8 @@ const PRODUCTS = [
     "blurb": "Grafted Hass avocado — the variety most sought after for export markets.",
     "image": "https://maxdcnnsthnsxuhurmtm.supabase.co/storage/v1/object/public/product-images/0965940f-d2fc-4e53-9e32-1ae89e46bed4/2379ed46-e1ff-4601-8083-3b9d73583485/6001599476675579473_121.jpg",
     "unit": "seedling",
-    "stock": 20
+    "stock": 20,
+    "description": "Grafted Hass avocado — the variety most sought after for export markets."
   },
   {
     "id": "pixie-tangerine",
@@ -151,7 +165,8 @@ const PRODUCTS = [
     "blurb": "Grafted Pixie tangerine seedling — a popular seedless variety.",
     "image": "https://maxdcnnsthnsxuhurmtm.supabase.co/storage/v1/object/public/product-images/0965940f-d2fc-4e53-9e32-1ae89e46bed4/6178832e-2f58-44d4-9e5d-776c8340deda/6001599476675579463_121.jpg",
     "unit": "seedling",
-    "stock": 20
+    "stock": 20,
+    "description": "Grafted Pixie tangerine seedling — a popular seedless variety."
   },
   {
     "id": "apple-tree-seedling",
@@ -161,7 +176,8 @@ const PRODUCTS = [
     "blurb": "Grafted apple tree seedling — ask us about current availability.",
     "image": "https://upload.wikimedia.org/wikipedia/commons/5/55/Apple_tree.jpg",
     "unit": "seedling",
-    "stock": 20
+    "stock": 20,
+    "description": "Grafted apple tree seedling — ask us about current availability."
   },
   {
     "id": "grape-vine-seedling",
@@ -171,7 +187,8 @@ const PRODUCTS = [
     "blurb": "Grape vine seedling — ask us about current availability.",
     "image": "https://upload.wikimedia.org/wikipedia/commons/9/9f/Grapevine.jpg",
     "unit": "seedling",
-    "stock": 20
+    "stock": 20,
+    "description": "Grape vine seedling — ask us about current availability."
   },
   {
     "id": "lemon-tree-seedling",
@@ -181,7 +198,8 @@ const PRODUCTS = [
     "blurb": "Grafted lemon tree seedling — ask us about current availability.",
     "image": "https://upload.wikimedia.org/wikipedia/commons/0/0c/Lemon_tree.jpg",
     "unit": "seedling",
-    "stock": 20
+    "stock": 20,
+    "description": "Grafted lemon tree seedling — ask us about current availability."
   }
 ];
 if (typeof window !== "undefined") window.PRODUCTS = PRODUCTS;
