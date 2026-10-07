@@ -1,0 +1,1 @@
+window.TIFFAS_CONFIG = {\n  WHATSAPP_NUMBER: "254725528888",\n  STORE_NAME: "FARMTEK09 CENTRE",\n  CURRENCY: "KES",\n  CATALOG_URL: "catalog/products.json",\n  SETTINGS_URL: "store-settings.json"\n};\n
