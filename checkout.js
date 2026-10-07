@@ -52,8 +52,20 @@
   function checkout(){
     if(!cart.length){toast("Your cart is empty.");return;}
     orderRef=newRef();
-    $("modalOverlay").hidden=false;
-    $("modalContent").innerHTML=
+    var overlay=$("modalOverlay");
+    var content=$("modalContent");
+    if(!overlay){
+      document.body.insertAdjacentHTML("beforeend",'<div id="modalOverlay" class="overlay modal-overlay"><section class="modal" role="dialog" aria-modal="true"><button id="modalClose" class="icon-btn modal-x" type="button">×</button><div id="modalContent"></div></section></div>');
+      overlay=$("modalOverlay"); content=$("modalContent");
+      $("modalClose").onclick=closeModal;
+    }
+    if(!content){
+      toast("Checkout could not open. Please refresh the page.");
+      return;
+    }
+    overlay.hidden=false;
+    content.innerHTML='<h2 id="modalTitle">Checkout</h2><p class="checkout-kicker">Loading your order…</p>'; 
+    content.innerHTML=
       '<h2 id="modalTitle">Checkout</h2>'+
       '<p class="checkout-kicker">Customer details, delivery and payment</p>'+
       '<label class="customer-field"><span>Full name</span><input id="customerName" type="text" placeholder="Your name" autocomplete="name"></label>'+
@@ -154,13 +166,23 @@
         var stepBtn=e.target.closest("[data-card-step]");
         if(stepBtn){var value=step.querySelector(".qty-value");value.textContent=String(Math.max(1,Number(value.textContent)+Number(stepBtn.dataset.cardStep)));return;}
         var addBtn=e.target.closest("[data-add-to-cart]");
-        if(addBtn){add(p.id,Number(step.querySelector(".qty-value").textContent||1));step.querySelector(".qty-value").textContent="1";}
+        if(addBtn){addToCart(p.id,Number(step.querySelector(".qty-value").textContent||1));step.querySelector(".qty-value").textContent="1";}
       });
     });
   }
   function directOrder(p){return "Hi! I'd like to order:\\n\\n"+p.name+"\\nPrice: "+money(p.price)+"\\n\\nPlease confirm availability.";}
   function watch(){var grid=$("productGrid");if(!grid)return;transformCards();new MutationObserver(transformCards).observe(grid,{childList:true});}
 
-  function init(){injectUi();watch();renderCart();}
+  function init(){
+    try{
+      injectUi();
+      watch();
+      renderCart();
+      window.FARMTEK_CHECKOUT_READY=true;
+    }catch(err){
+      console.error("Farmtek checkout init failed",err);
+      toast("Checkout could not initialize. Please refresh.");
+    }
+  }
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init);else init();
 })();
