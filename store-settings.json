@@ -1,12 +1,11 @@
 {
-  "whatsappNumber": "254725528888",
-  "bankName": "M-Pesa PayBill 400200",
-  "accountName": "FARMTEK09 CENTRE",
-  "accountNumber": "400200",
-  "branch": "PayBill Account 54095",
+  "bankName": "",
+  "accountName": "",
+  "accountNumber": "",
+  "branch": "",
   "swiftCode": "",
-  "paymentInstructions": "Lipa na M-Pesa → PayBill 400200 → Account 54095. Use your Farmtek order reference and send confirmation on WhatsApp.",
-  "currency": "KES",
-  "cloudinaryCloudName": "",
+  "whatsappNumber": "254725528888",
+  "paymentInstructions": "",
+  "cloudinaryCloudName": "n1zmuvrv",
   "cloudinaryUploadPreset": "farmtek_products"
-}\n
+}
