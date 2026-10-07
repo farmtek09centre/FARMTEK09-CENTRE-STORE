@@ -3,55 +3,106 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Farmtek09 Centre | Fruit Seedlings & TC Bananas</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-<link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="checkout.css">
+<title>FARMTEK09 CENTRE — Order on WhatsApp</title>
+<meta name="description" content="Farmtek09 Centre — premium TC bananas, grafted fruit trees and seedlings in Lower Kabete. Order on WhatsApp, pay via M-Pesa.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600;700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<nav class="navbar"><ul>
-<li><a href="#hero">Home</a></li><li><a href="#products">Products</a></li><li><a href="#contact">Contact</a></li>
-</ul></nav>
 
-<section id="hero" class="hero fade-in"><div class="hero-overlay">
-<h1 class="display-3">Farmtek09 Centre</h1>
-<p>Premium tissue-culture bananas, fruit seedlings & ornamental plants — Lower Kabete, Nairobi.</p>
-<a href="#products" class="ft-hero-btn">Shop Seedlings</a>
-</div></section>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <span class="brand">FARMTEK09 CENTRE</span>
+      <a class="topbar-whatsapp" id="topbarWhatsapp" href="#" target="_blank" rel="noopener"></a>
+    </div>
+  </header>
 
-<section id="products" class="container fade-in">
-<h2 style="text-align:center;margin-bottom:2rem;">Our Premium Seedlings</h2>
-<div id="product-grid" class="products" aria-live="polite"></div>
-</section>
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <p class="eyebrow">Order on WhatsApp</p>
+        <h1>Premium TC bananas, grafted fruit trees &amp; seedlings.</h1>
+        <p class="hero-sub">Browse our seedlings below. Tap any item to send an order straight to WhatsApp, or visit us in Lower Kabete to see the nursery yourself.</p>
+        <div class="hero-actions">
+          <a href="#catalogue" class="btn btn-primary">Browse the seedlings</a>
+          <a href="#" id="heroWhatsapp" class="btn btn-whatsapp" target="_blank" rel="noopener">Chat with us</a>
+        </div>
+      </div>
+      <div class="hero-shelf" aria-hidden="true">
+        <div class="shelf-track" id="shelfTrack"></div>
+      </div>
+    </div>
+  </section>
 
-<section id="contact" class="contact fade-in">
-<h2>Contact Farmtek09 Centre</h2>
-<p>Order seedlings or ask about availability.</p>
-<p><i class="fa fa-phone"></i> 0725528888 / 0725679016</p>
-<p><i class="fa fa-envelope"></i> farmtek09centre@gmail.com</p>
-<p><i class="fa fa-envelope"></i> bakaryfarm@gmail.com</p>
-</section>
-<footer><p>© 2026 Farmtek09 Centre — Lower Kabete, Nairobi</p><p><a href="admin.html" style="opacity:.45">Admin</a></p></footer>
+  <section class="info-panels">
+    <div class="info-card">
+      <div class="info-card-head">
+        <div class="info-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 22s7-7.4 7-12.5A7 7 0 0 0 5 9.5C5 14.6 12 22 12 22Z"/><circle cx="12" cy="9.5" r="2.3"/></svg>
+        </div>
+        <h3>Visit the Nursery</h3>
+      </div>
+      <iframe id="mapFrame" class="map-frame" src="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Farmtek09 Centre location"></iframe>
+      <p class="location-line"><strong class="js-location-name"></strong></p>
+      <p class="hours-line js-hours"></p>
+      <div class="location-actions">
+        <a id="directionsLink" class="btn btn-secondary" href="#" target="_blank" rel="noopener">Get Directions</a>
+        <a id="locationWhatsapp" class="btn btn-whatsapp" href="#" target="_blank" rel="noopener">Ask on WhatsApp</a>
+      </div>
+    </div>
 
-<script src="products.js"></script>
-<script>
-(function(){
- const grid=document.getElementById("product-grid");
- grid.innerHTML=PRODUCTS.map(p=>`
- <div class="product-card" data-product-id="${p.id}">
-   <div class="bubble">
-     <img src="${p.image}" alt="${p.name}" loading="lazy">
-     <h3>${p.name}</h3>
-     <p>${p.description}</p>
-     <strong>KES ${Number(p.price).toLocaleString("en-KE")} / ${p.unit}</strong>
-     <small>${p.stock>0 ? p.stock+" in stock" : "Currently unavailable"}</small>
-   </div>
- </div>`).join("");
- const faders=document.querySelectorAll(".fade-in");
- const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("appear");io.unobserve(e.target)}}),{threshold:.1,rootMargin:"0px 0px -50px 0px"});
- faders.forEach(x=>io.observe(x));
-})();
-</script>
-<script src="cart.js" defer></script>
+    <div class="info-card">
+      <div class="info-card-head">
+        <div class="info-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/><path d="M9.5 6h5"/></svg>
+        </div>
+        <h3>Pay via M-Pesa</h3>
+      </div>
+      <p class="pay-note" style="margin-top:0;">Lipa na M-Pesa → Pay Bill (Co-operative Bank)</p>
+      <div class="pay-field">
+        <span class="pay-field-text">Business No.<span class="pay-value js-paybill-business"></span></span>
+        <button class="btn btn-copy" type="button" data-copy="400200">Copy</button>
+      </div>
+      <div class="pay-field">
+        <span class="pay-field-text">Account No.<span class="pay-value js-paybill-account"></span></span>
+        <button class="btn btn-copy" type="button" data-copy="54095">Copy</button>
+      </div>
+      <p class="pay-note">Account name: <strong class="js-store-name"></strong> — after paying, send your order on WhatsApp and we'll confirm.</p>
+    </div>
+  </section>
+
+  <main class="catalogue" id="catalogue">
+    <div class="controls">
+      <div class="search-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input id="searchInput" type="search" placeholder="Search seedlings…" aria-label="Search products">
+      </div>
+      <div class="pills" id="categoryPills"></div>
+    </div>
+
+    <p class="result-count" id="resultCount"></p>
+    <div class="grid" id="productGrid"></div>
+
+    <div class="empty-state" id="emptyState" hidden>
+      <p>No products match "<span id="emptyQuery"></span>".</p>
+      <button id="clearFilters" class="btn btn-secondary">Clear filters</button>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p><span class="js-store-name"></span> · <span class="js-location-name"></span></p>
+    <p>Order or ask a question on WhatsApp: <a id="footerWhatsapp" href="#">0725 528 888</a></p>
+    <p>Also reachable on 0725 679 016</p>
+    <p>farmtek09centre@gmail.com · bakaryfarm@gmail.com</p>
+    <p class="fine-print">Prices shown in Kenyan Shillings (KES). Final availability is confirmed on WhatsApp.</p>
+    <p><a href="admin.html">Admin</a></p>
+  </footer>
+
+  <a href="#" id="floatingWhatsapp" class="floating-whatsapp" target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp"></a>
+
+  <script src="products.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
