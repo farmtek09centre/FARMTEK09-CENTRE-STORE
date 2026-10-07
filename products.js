@@ -1,19 +1,188 @@
 /**
- * FARMTEK09 CENTRE — shared GitHub catalogue.
- * This is the source of truth for the customer storefront and checkout.
- * The admin dashboard edits this file directly through the GitHub Contents API.
+ * FARMTEK09 CENTRE — migrated from the original Render/GitHub storefront.
+ * This is the shared catalogue used by the customer storefront and admin.
  */
 const PRODUCTS = [
-  { id:"grandnain", name:"Grand Nain Banana", price:200, unit:"seedling", stock:20, image:"https://upload.wikimedia.org/wikipedia/commons/3/3c/Banana_tree.jpg", description:"Healthy tissue-culture Grand Nain banana seedlings." },
-  { id:"williams", name:"Williams Hybrid Banana", price:200, unit:"seedling", stock:20, image:"https://upload.wikimedia.org/wikipedia/commons/f/fc/Banana_Plant_tree.jpg", description:"Williams hybrid banana seedlings for productive farms." },
-  { id:"fhia17", name:"FHIA-17 Banana", price:250, unit:"seedling", stock:20, image:"https://upload.wikimedia.org/wikipedia/commons/1/1a/Banana_tree_fruit.jpg", description:"FHIA-17 tissue-culture banana seedlings." },
-  { id:"cavendish", name:"Giant Cavendish Banana", price:200, unit:"seedling", stock:20, image:"https://upload.wikimedia.org/wikipedia/commons/5/51/Banana_tree_with_bunch.jpg", description:"Giant Cavendish banana seedlings." },
-  { id:"lemon", name:"Lemon Tree", price:350, unit:"seedling", stock:20, image:"https://upload.wikimedia.org/wikipedia/commons/0/0c/Lemon_tree.jpg", description:"Grafted lemon seedlings for home gardens and farms." },
-  { id:"tangerine", name:"Tangerine Tree", price:350, unit:"seedling", stock:20, image:"https://upload.wikimedia.org/wikipedia/commons/0/05/Tangerine_tree.jpg", description:"Healthy tangerine seedlings." },
-  { id:"apple", name:"Apple Tree", price:400, unit:"seedling", stock:20, image:"https://upload.wikimedia.org/wikipedia/commons/5/55/Apple_tree.jpg", description:"Apple seedlings suitable for highland growing conditions." },
-  { id:"grape", name:"Grape Vine", price:300, unit:"seedling", stock:20, image:"https://upload.wikimedia.org/wikipedia/commons/9/9f/Grapevine.jpg", description:"Grape vines for farms and home gardens." },
-  { id:"mango", name:"Mango Tree", price:300, unit:"seedling", stock:20, image:"https://upload.wikimedia.org/wikipedia/commons/5/59/Mango_tree.jpg", description:"Quality mango grafted seedlings." },
-  { id:"avocado", name:"Avocado Tree", price:350, unit:"seedling", stock:20, image:"https://upload.wikimedia.org/wikipedia/commons/3/3b/Avocado_tree.jpg", description:"Quality avocado seedlings for farmers and home growers." }
+  {
+    "id": "grand-nain-tc-banana",
+    "name": "Grand Nain TC Banana",
+    "category": "Bananas & Plantains",
+    "price": 150,
+    "blurb": "Certified tissue-culture banana — disease-free planting material.",
+    "image": "https://maxdcnnsthnsxuhurmtm.supabase.co/storage/v1/object/public/product-images/0965940f-d2fc-4e53-9e32-1ae89e46bed4/d8d555b8-8ddf-4290-8f72-3ee3a6009923/GRAND.jpg",
+    "unit": "seedling",
+    "stock": 20
+  },
+  {
+    "id": "williams-tc-banana",
+    "name": "Williams Hybrid TC Banana",
+    "category": "Bananas & Plantains",
+    "price": 150,
+    "blurb": "Certified tissue-culture banana — disease-free planting material.",
+    "image": "https://maxdcnnsthnsxuhurmtm.supabase.co/storage/v1/object/public/product-images/0965940f-d2fc-4e53-9e32-1ae89e46bed4/46502379-db4a-412e-a2ce-f6aec897b43f/6001599476675579460_121.jpg",
+    "unit": "seedling",
+    "stock": 20
+  },
+  {
+    "id": "williams-ripening-tc-banana",
+    "name": "Williams (Ripening) TC Banana",
+    "category": "Bananas & Plantains",
+    "price": 150,
+    "blurb": "Williams variety, ready for ripening — certified tissue-culture planting material.",
+    "image": "https://maxdcnnsthnsxuhurmtm.supabase.co/storage/v1/object/public/product-images/0965940f-d2fc-4e53-9e32-1ae89e46bed4/f7d09518-8595-4753-b027-1dfb93b7fc7e/6001599476675579477_121.jpg",
+    "unit": "seedling",
+    "stock": 20
+  },
+  {
+    "id": "giant-cavendish-tc-banana",
+    "name": "Giant Cavendish TC Banana",
+    "category": "Bananas & Plantains",
+    "price": 150,
+    "blurb": "Certified tissue-culture banana — disease-free planting material.",
+    "image": "https://maxdcnnsthnsxuhurmtm.supabase.co/storage/v1/object/public/product-images/0965940f-d2fc-4e53-9e32-1ae89e46bed4/e57d5ef3-8b23-4457-846b-2ad30276d4f8/6001599476675579461_121.jpg",
+    "unit": "seedling",
+    "stock": 20
+  },
+  {
+    "id": "fhia17-tc-banana",
+    "name": "FHIA-17 TC Banana",
+    "category": "Bananas & Plantains",
+    "price": null,
+    "blurb": "A hardy, disease-resistant banana hybrid — ask us about current availability.",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/1/1a/Banana_tree_fruit.jpg",
+    "unit": "seedling",
+    "stock": 20
+  },
+  {
+    "id": "ngombe-cooking-tc-banana",
+    "name": "Ng'ombe (Cooking) TC Banana",
+    "category": "Bananas & Plantains",
+    "price": 150,
+    "blurb": "Certified tissue-culture banana — disease-free planting material.",
+    "image": "https://maxdcnnsthnsxuhurmtm.supabase.co/storage/v1/object/public/product-images/0965940f-d2fc-4e53-9e32-1ae89e46bed4/63c0fa76-68b2-40f7-817b-4d80024980b7/6001599476675579478_121.jpg",
+    "unit": "seedling",
+    "stock": 20
+  },
+  {
+    "id": "nusu-ngombe-tc-banana",
+    "name": "Nusu Ng'ombe TC Banana",
+    "category": "Bananas & Plantains",
+    "price": 150,
+    "blurb": "Certified tissue-culture banana — disease-free planting material.",
+    "image": "https://maxdcnnsthnsxuhurmtm.supabase.co/storage/v1/object/public/product-images/0965940f-d2fc-4e53-9e32-1ae89e46bed4/fc4a5588-8ee8-4d70-9a26-2a639b3ffa56/6001599476675579556_121.jpg",
+    "unit": "seedling",
+    "stock": 20
+  },
+  {
+    "id": "plantain-tc-banana",
+    "name": "Plantain TC Banana",
+    "category": "Bananas & Plantains",
+    "price": 300,
+    "blurb": "Certified tissue-culture plantain — disease-free planting material.",
+    "image": "https://maxdcnnsthnsxuhurmtm.supabase.co/storage/v1/object/public/product-images/0965940f-d2fc-4e53-9e32-1ae89e46bed4/906ed70d-ef6f-471c-bb8d-796ee82bfcfe/6001599476675579558_121.jpg",
+    "unit": "seedling",
+    "stock": 20
+  },
+  {
+    "id": "plantain-tc-banana-2",
+    "name": "Plantain TC Banana",
+    "category": "Bananas & Plantains",
+    "price": 300,
+    "blurb": "Certified tissue-culture plantain — disease-free planting material.",
+    "image": "https://maxdcnnsthnsxuhurmtm.supabase.co/storage/v1/object/public/product-images/0965940f-d2fc-4e53-9e32-1ae89e46bed4/9bc52e59-f1cc-4df8-ad14-ae773f31a4db/6001599476675579479_121.jpg",
+    "unit": "seedling",
+    "stock": 20
+  },
+  {
+    "id": "uganda-green-tc-banana",
+    "name": "Uganda Green TC Banana",
+    "category": "Bananas & Plantains",
+    "price": 150,
+    "blurb": "Certified tissue-culture banana — disease-free planting material.",
+    "image": "https://maxdcnnsthnsxuhurmtm.supabase.co/storage/v1/object/public/product-images/0965940f-d2fc-4e53-9e32-1ae89e46bed4/11e4e392-3dc9-4e9e-bc75-bfbc36c108a7/6001599476675579591_121.jpg",
+    "unit": "seedling",
+    "stock": 20
+  },
+  {
+    "id": "vallarey-tc-banana",
+    "name": "Vallarey TC Banana",
+    "category": "Bananas & Plantains",
+    "price": 150,
+    "blurb": "Certified tissue-culture banana — disease-free planting material.",
+    "image": "https://maxdcnnsthnsxuhurmtm.supabase.co/storage/v1/object/public/product-images/0965940f-d2fc-4e53-9e32-1ae89e46bed4/5dffa437-7760-4a10-b500-dd025abcea8a/6001599476675579469_121.jpg",
+    "unit": "seedling",
+    "stock": 20
+  },
+  {
+    "id": "apple-grafted-mango",
+    "name": "Apple Grafted Mango",
+    "category": "Mangoes",
+    "price": 150,
+    "blurb": "Grafted mango seedling — true-to-type and ready for transplanting.",
+    "image": "https://maxdcnnsthnsxuhurmtm.supabase.co/storage/v1/object/public/product-images/0965940f-d2fc-4e53-9e32-1ae89e46bed4/f8870c66-2d06-4e99-8b22-631b17684089/6001599476675579476_121.jpg",
+    "unit": "seedling",
+    "stock": 20
+  },
+  {
+    "id": "tomy-atken-grafted-mango",
+    "name": "Tomy Atken Grafted Mango",
+    "category": "Mangoes",
+    "price": 150,
+    "blurb": "Grafted mango seedling — true-to-type and ready for transplanting.",
+    "image": "https://maxdcnnsthnsxuhurmtm.supabase.co/storage/v1/object/public/product-images/0965940f-d2fc-4e53-9e32-1ae89e46bed4/131237e0-bb00-49e8-a226-d4016de4b884/6001599476675579464_121.jpg",
+    "unit": "seedling",
+    "stock": 20
+  },
+  {
+    "id": "hass-grafted-avocado",
+    "name": "Hass Grafted Avocado",
+    "category": "Avocados",
+    "price": 150,
+    "blurb": "Grafted Hass avocado — the variety most sought after for export markets.",
+    "image": "https://maxdcnnsthnsxuhurmtm.supabase.co/storage/v1/object/public/product-images/0965940f-d2fc-4e53-9e32-1ae89e46bed4/2379ed46-e1ff-4601-8083-3b9d73583485/6001599476675579473_121.jpg",
+    "unit": "seedling",
+    "stock": 20
+  },
+  {
+    "id": "pixie-tangerine",
+    "name": "Pixie Tangerine",
+    "category": "Tangerines",
+    "price": 150,
+    "blurb": "Grafted Pixie tangerine seedling — a popular seedless variety.",
+    "image": "https://maxdcnnsthnsxuhurmtm.supabase.co/storage/v1/object/public/product-images/0965940f-d2fc-4e53-9e32-1ae89e46bed4/6178832e-2f58-44d4-9e5d-776c8340deda/6001599476675579463_121.jpg",
+    "unit": "seedling",
+    "stock": 20
+  },
+  {
+    "id": "apple-tree-seedling",
+    "name": "Apple Tree Seedling",
+    "category": "Apples",
+    "price": null,
+    "blurb": "Grafted apple tree seedling — ask us about current availability.",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/5/55/Apple_tree.jpg",
+    "unit": "seedling",
+    "stock": 20
+  },
+  {
+    "id": "grape-vine-seedling",
+    "name": "Grape Vine Seedling",
+    "category": "Grapes",
+    "price": null,
+    "blurb": "Grape vine seedling — ask us about current availability.",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/9/9f/Grapevine.jpg",
+    "unit": "seedling",
+    "stock": 20
+  },
+  {
+    "id": "lemon-tree-seedling",
+    "name": "Lemon Tree Seedling",
+    "category": "Lemons",
+    "price": null,
+    "blurb": "Grafted lemon tree seedling — ask us about current availability.",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/0/0c/Lemon_tree.jpg",
+    "unit": "seedling",
+    "stock": 20
+  }
 ];
-
+if (typeof window !== "undefined") window.PRODUCTS = PRODUCTS;
 if (typeof module !== "undefined") module.exports = PRODUCTS;
