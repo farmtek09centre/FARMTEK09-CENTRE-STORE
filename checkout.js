@@ -1,6 +1,6 @@
 (function(){
 "use strict";
-const STORE="FARMTEK09 CENTRE", PHONE="254725528888", PAYBILL="400200", ACCOUNT="54095", KEY="farmtek09_cart_checkout";
+const STORE="FARMTEK09 CENTRE", PHONE="254725528888", PAYBILL="400200", ACCOUNT="54095", KEY="farmtek09_cart_checkout_v2";
 let cart=load();
 const $=id=>document.getElementById(id);
 const money=n=>"Ksh "+Number(n||0).toLocaleString("en-KE");
