@@ -14,6 +14,9 @@ const LOCATION_HOURS = "Open daily, 9:00 AM – 5:00 PM";
 const MAPS_EMBED_URL = `https://www.google.com/maps?q=${LOCATION_LAT},${LOCATION_LNG}&z=15&output=embed`;
 const MAPS_DIRECTIONS_URL = `https://www.google.com/maps/search/?api=1&query=${LOCATION_LAT},${LOCATION_LNG}`;
 
+// In-memory cart: { [productId]: quantity }. Resets on page reload by design.
+let cart = {};
+
 const CATEGORY_ORDER = ["Bananas & Plantains", "Mangoes", "Avocados", "Tangerines", "Apples", "Grapes", "Lemons"];
 
 const CATEGORY_ICONS = {
@@ -27,6 +30,8 @@ const CATEGORY_ICONS = {
 };
 
 const WHATSAPP_GLYPH = `<svg viewBox="0 0 32 32"><path d="M16.02 3C9.4 3 4 8.4 4 15.02c0 2.35.65 4.55 1.78 6.43L4 29l7.72-1.75a12.9 12.9 0 0 0 4.3.74h.01c6.62 0 12.02-5.4 12.02-12.02C28.05 8.4 22.65 3 16.02 3Zm7.05 17.13c-.3.83-1.7 1.6-2.36 1.7-.6.1-1.37.14-2.2-.14-.5-.16-1.16-.38-1.99-.75-3.5-1.52-5.79-5.05-5.97-5.29-.17-.24-1.43-1.9-1.43-3.63s.9-2.57 1.23-2.93c.32-.35.7-.44.94-.44.23 0 .47 0 .67.01.22.01.5-.08.78.6.3.7.99 2.44 1.08 2.62.09.17.15.38.03.62-.12.24-.18.38-.35.58-.18.2-.37.45-.53.6-.18.17-.36.36-.16.7.21.34.92 1.52 1.98 2.46 1.36 1.21 2.5 1.59 2.85 1.77.35.17.55.14.75-.08.2-.23.87-1 1.1-1.35.23-.35.46-.29.77-.17.32.12 2.02.95 2.37 1.13.35.17.58.26.66.4.09.15.09.85-.22 1.67Z"/></svg>`;
+
+const CART_GLYPH = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/><path d="M2.5 3h2l2.4 12.4a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.6L21 7H6"/></svg>`;
 
 let allProducts = [];
 let activeCategory = "All";
@@ -62,20 +67,39 @@ function priceHtml(p) {
 }
 
 function cardHtml(p) {
-  const ctaLabel = p.price == null ? "Enquire on WhatsApp" : "Order on WhatsApp";
-  return `
+  const media = `<div class="card-media">${mediaHtml(p)}</div>`;
+  const head = `
+      <p class="card-category">${escapeHtml(p.category)}</p>
+      <p class="card-name">${escapeHtml(p.name)}</p>
+      ${priceHtml(p)}`;
+
+  if (p.price == null) {
+    // No price yet — quantity/cart doesn't apply, keep the direct WhatsApp enquiry.
+    return `
     <article class="card">
-      <div class="card-media">${mediaHtml(p)}</div>
+      ${media}
       <div class="card-body">
-        <p class="card-category">${escapeHtml(p.category)}</p>
-        <p class="card-name">${escapeHtml(p.name)}</p>
-        ${priceHtml(p)}
+        ${head}
         <a class="btn btn-order card-cta" href="${waLink(orderMessage(p))}" target="_blank" rel="noopener">
-          ${WHATSAPP_GLYPH.replace('viewBox="0 0 32 32"', 'viewBox="0 0 32 32" width="16" height="16"')} ${ctaLabel}
+          ${WHATSAPP_GLYPH.replace('viewBox="0 0 32 32"', 'viewBox="0 0 32 32" width="16" height="16"')} Enquire on WhatsApp
         </a>
       </div>
-    </article>
-  `;
+    </article>`;
+  }
+
+  return `
+    <article class="card" data-product-id="${p.id}">
+      ${media}
+      <div class="card-body">
+        ${head}
+        <div class="qty-stepper" data-qty-for="${p.id}">
+          <button type="button" class="qty-btn" data-step="-1" aria-label="Decrease quantity">−</button>
+          <span class="qty-value" data-qty-value>1</span>
+          <button type="button" class="qty-btn" data-step="1" aria-label="Increase quantity">+</button>
+        </div>
+        <button type="button" class="btn btn-order card-cta" data-add-to-cart="${p.id}">Add to Cart</button>
+      </div>
+    </article>`;
 }
 
 function render() {
@@ -188,6 +212,179 @@ function wireControls() {
   });
 }
 
+/* =========================================================
+   Cart: quantity stepper on each card, cart modal, checkout via WhatsApp
+   ========================================================= */
+
+function findProduct(id) {
+  return allProducts.find((p) => p.id === id);
+}
+
+function cartCount() {
+  return Object.values(cart).reduce((sum, qty) => sum + qty, 0);
+}
+
+function cartTotal() {
+  return Object.entries(cart).reduce((sum, [id, qty]) => {
+    const p = findProduct(id);
+    return sum + (p && p.price != null ? p.price * qty : 0);
+  }, 0);
+}
+
+function updateCartBadge() {
+  const badge = document.getElementById("cartBadge");
+  const count = cartCount();
+  badge.textContent = count;
+  badge.hidden = count === 0;
+}
+
+function addToCart(id, qty) {
+  if (!qty || qty < 1) return;
+  cart[id] = qty;
+  updateCartBadge();
+}
+
+function changeCartLine(id, delta) {
+  const p = findProduct(id);
+  if (!p) return;
+  const next = (cart[id] || 0) + delta;
+  if (next <= 0) {
+    delete cart[id];
+  } else {
+    cart[id] = next;
+  }
+  updateCartBadge();
+  renderCartModal();
+}
+
+function removeCartLine(id) {
+  delete cart[id];
+  updateCartBadge();
+  renderCartModal();
+}
+
+function cartLineHtml(id, qty) {
+  const p = findProduct(id);
+  if (!p) return "";
+  const lineTotal = p.price * qty;
+  return `
+    <div class="cart-line" data-cart-line="${id}">
+      <div class="cart-line-media">${mediaHtml(p)}</div>
+      <div class="cart-line-info">
+        <p class="cart-line-name">${escapeHtml(p.name)}</p>
+        <p class="cart-line-unit">Ksh ${p.price.toLocaleString()} each</p>
+        <div class="qty-stepper qty-stepper-sm">
+          <button type="button" class="qty-btn" data-cart-step="${id}" data-step="-1" aria-label="Decrease quantity">−</button>
+          <span class="qty-value">${qty}</span>
+          <button type="button" class="qty-btn" data-cart-step="${id}" data-step="1" aria-label="Increase quantity">+</button>
+        </div>
+      </div>
+      <div class="cart-line-right">
+        <span class="cart-line-total">Ksh ${lineTotal.toLocaleString()}</span>
+        <button type="button" class="cart-line-remove" data-cart-remove="${id}" aria-label="Remove item">Remove</button>
+      </div>
+    </div>`;
+}
+
+function renderCartModal() {
+  const body = document.getElementById("cartBody");
+  const footer = document.getElementById("cartFooter");
+  const entries = Object.entries(cart);
+
+  if (entries.length === 0) {
+    body.innerHTML = `<p class="cart-empty">Your cart is empty. Browse the seedlings and tap "Add to Cart" on any item.</p>`;
+    footer.hidden = true;
+    return;
+  }
+
+  body.innerHTML = entries.map(([id, qty]) => cartLineHtml(id, qty)).join("");
+  footer.hidden = false;
+  document.getElementById("cartTotal").textContent = `Ksh ${cartTotal().toLocaleString()}`;
+}
+
+function buildCheckoutMessage() {
+  const lines = Object.entries(cart).map(([id, qty]) => {
+    const p = findProduct(id);
+    return `${qty}x ${p.name} @ Ksh ${p.price.toLocaleString()} = Ksh ${(p.price * qty).toLocaleString()}`;
+  });
+  return `Hi! I'd like to order:\n\n${lines.join("\n")}\n\nTotal: Ksh ${cartTotal().toLocaleString()}\n\nI'll pay via M-Pesa Paybill ${PAYBILL_BUSINESS}, Account ${PAYBILL_ACCOUNT} (${STORE_NAME}) — please confirm availability.`;
+}
+
+function openCart() {
+  renderCartModal();
+  document.getElementById("cartOverlay").hidden = false;
+  document.body.style.overflow = "hidden";
+}
+
+function closeCart() {
+  document.getElementById("cartOverlay").hidden = true;
+  document.body.style.overflow = "";
+}
+
+function wireCart() {
+  document.getElementById("cartButton").addEventListener("click", openCart);
+  document.getElementById("cartClose").addEventListener("click", closeCart);
+  document.getElementById("cartOverlay").addEventListener("click", (e) => {
+    if (e.target.id === "cartOverlay") closeCart();
+  });
+
+  // Quantity steppers on product cards (event delegation — cards re-render on filter/search)
+  document.getElementById("productGrid").addEventListener("click", (e) => {
+    const stepBtn = e.target.closest(".qty-btn[data-step]");
+    if (stepBtn && stepBtn.closest("[data-qty-for]")) {
+      const wrap = stepBtn.closest("[data-qty-for]");
+      const valueEl = wrap.querySelector("[data-qty-value]");
+      const next = Math.max(1, parseInt(valueEl.textContent, 10) + parseInt(stepBtn.dataset.step, 10));
+      valueEl.textContent = next;
+      return;
+    }
+    const addBtn = e.target.closest("[data-add-to-cart]");
+    if (addBtn) {
+      const id = addBtn.dataset.addToCart;
+      const card = addBtn.closest(".card");
+      const qty = parseInt(card.querySelector("[data-qty-value]").textContent, 10);
+      addToCart(id, qty);
+      const original = addBtn.textContent;
+      addBtn.textContent = "Added!";
+      addBtn.classList.add("copied");
+      setTimeout(() => {
+        addBtn.textContent = original;
+        addBtn.classList.remove("copied");
+      }, 1200);
+    }
+  });
+
+  // Quantity +/- and remove inside the cart modal itself
+  document.getElementById("cartBody").addEventListener("click", (e) => {
+    const stepBtn = e.target.closest("[data-cart-step]");
+    if (stepBtn) {
+      changeCartLine(stepBtn.dataset.cartStep, parseInt(stepBtn.dataset.step, 10));
+      return;
+    }
+    const removeBtn = e.target.closest("[data-cart-remove]");
+    if (removeBtn) removeCartLine(removeBtn.dataset.cartRemove);
+  });
+
+  document.getElementById("checkoutBtn").addEventListener("click", () => {
+    if (Object.keys(cart).length === 0) return;
+    window.open(waLink(buildCheckoutMessage()), "_blank", "noopener");
+
+    // Show a confirmation as the last thing the customer sees — no flash of
+    // an empty cart, no premature close. This *is* the end of checkout.
+    document.getElementById("cartBody").innerHTML = `
+      <p class="cart-sent">✓ Order sent — check WhatsApp to confirm with us.</p>`;
+    document.getElementById("cartFooter").hidden = true;
+
+    cart = {};
+    updateCartBadge();
+
+    setTimeout(() => {
+      closeCart();
+      renderCartModal();
+    }, 1600);
+  });
+}
+
 async function init() {
   applyBranding();
   allProducts = Array.isArray(window.PRODUCTS) ? window.PRODUCTS : [];
@@ -195,6 +392,7 @@ async function init() {
   document.getElementById("topbarWhatsapp").innerHTML = `${WHATSAPP_GLYPH.replace('viewBox="0 0 32 32"', 'viewBox="0 0 32 32" width="16" height="16"')} 0725 528 888`;
   wireWhatsappLinks();
   wireCopyButtons();
+  wireCart();
   buildCategoryPills();
   buildShelf();
   wireControls();
