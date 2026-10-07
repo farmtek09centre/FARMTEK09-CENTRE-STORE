@@ -36,3 +36,9 @@
   .brand-logo,.brand-logo-img{width:92px!important;height:92px!important}
   .top-actions{gap:8px}
 }
+
+/* FARMTEK09 shared logo treatment */
+.brand-logo{width:96px!important;height:96px!important;display:flex!important;align-items:center!important;justify-content:center!important;background:transparent!important}
+.brand-logo-img,.admin-logo{width:96px!important;height:96px!important;display:block!important;object-fit:contain!important;object-position:center!important;background:transparent!important;border:0!important;border-radius:0!important}
+.topbar-inner{height:100px!important}
+@media(max-width:650px){.topbar-inner{height:88px!important}.brand-logo,.brand-logo-img{width:82px!important;height:82px!important}}
