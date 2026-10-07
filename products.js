@@ -1,6 +1,6 @@
 /**
- * FARMTEK09 CENTRE — migrated from the original Render/GitHub storefront.
- * This is the shared catalogue used by the customer storefront and admin.
+ * FARMTEK09 CENTRE — authoritative catalogue migrated from
+ * kabete2349/FARMTEK09-CENTRE-STORE-FRONT.
  */
 const PRODUCTS = [
   {
