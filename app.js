@@ -1,205 +1,93 @@
-/* =========================================================
-   EDIT THESE FOR YOUR BUSINESS
-   ========================================================= */
-const STORE_NAME = "FARMTEK09 CENTRE";
-const WHATSAPP_NUMBER = "254725528888";   // international format, digits only, no + or spaces
-const PAYBILL_BUSINESS = "400200";        // Co-operative Bank Lipa na M-Pesa business number
-const PAYBILL_ACCOUNT = "54095";          // account number
-const LOCATION_NAME = "Lower Kabete, Nairobi";
-const LOCATION_LAT = -1.2379275;
-const LOCATION_LNG = 36.7267739;
-const LOCATION_HOURS = "Open daily, 9:00 AM – 5:00 PM";
-/* ========================================================= */
-
-const MAPS_EMBED_URL = `https://www.google.com/maps?q=${LOCATION_LAT},${LOCATION_LNG}&z=15&output=embed`;
-const MAPS_DIRECTIONS_URL = `https://www.google.com/maps/search/?api=1&query=${LOCATION_LAT},${LOCATION_LNG}`;
-
-
-const CATEGORY_ORDER = ["Bananas & Plantains", "Mangoes", "Avocados", "Tangerines", "Apples", "Grapes", "Lemons"];
-
-const CATEGORY_ICONS = {
-  "Bananas & Plantains": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 3c-1 5 0 12 6 15 5 2 10-1 11-7-3 2-7 2-9 0"/><path d="M17 4c1 2 1 4 0 6"/></svg>`,
-  "Mangoes": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 4c4 0 7 4 7 8.5S16 21 12 21s-7-4.5-7-8.5S8 4 12 4Z"/><path d="M12 4c0-1.2.8-2 2-2.4"/></svg>`,
-  "Avocados": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3c4 1 6 6 6 10a6 6 0 0 1-12 0c0-4 2-9 6-10Z"/><circle cx="12" cy="14" r="2.6"/></svg>`,
-  "Tangerines": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="13" r="8"/><path d="M12 5c1 0 2-1 2-2M9 4l1.5 1.5"/></svg>`,
-  "Apples": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 8c-3-3-8-1-8 4 0 5 4 9 8 9s8-4 8-9c0-5-5-7-8-4Z"/><path d="M12 8V4c0-1 1-2 2-2"/></svg>`,
-  "Grapes": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="10" r="2.2"/><circle cx="14" cy="10" r="2.2"/><circle cx="6.5" cy="14.5" r="2.2"/><circle cx="11.5" cy="14.5" r="2.2"/><circle cx="16.5" cy="14.5" r="2.2"/><circle cx="9" cy="19" r="2.2"/><circle cx="14" cy="19" r="2.2"/><path d="M11 6V3M11 3c1.5 0 2-1 2-2"/></svg>`,
-  "Lemons": `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><ellipse cx="12" cy="12" rx="6.5" ry="8.5"/><path d="M5.7 8c1 .2 1.8-.4 2-1.4M18.3 16c-1-.2-1.8.4-2 1.4"/></svg>`,
-};
-
-const WHATSAPP_GLYPH = `<svg viewBox="0 0 32 32"><path d="M16.02 3C9.4 3 4 8.4 4 15.02c0 2.35.65 4.55 1.78 6.43L4 29l7.72-1.75a12.9 12.9 0 0 0 4.3.74h.01c6.62 0 12.02-5.4 12.02-12.02C28.05 8.4 22.65 3 16.02 3Zm7.05 17.13c-.3.83-1.7 1.6-2.36 1.7-.6.1-1.37.14-2.2-.14-.5-.16-1.16-.38-1.99-.75-3.5-1.52-5.79-5.05-5.97-5.29-.17-.24-1.43-1.9-1.43-3.63s.9-2.57 1.23-2.93c.32-.35.7-.44.94-.44.23 0 .47 0 .67.01.22.01.5-.08.78.6.3.7.99 2.44 1.08 2.62.09.17.15.38.03.62-.12.24-.18.38-.35.58-.18.2-.37.45-.53.6-.18.17-.36.36-.16.7.21.34.92 1.52 1.98 2.46 1.36 1.21 2.5 1.59 2.85 1.77.35.17.55.14.75-.08.2-.23.87-1 1.1-1.35.23-.35.46-.29.77-.17.32.12 2.02.95 2.37 1.13.35.17.58.26.66.4.09.15.09.85-.22 1.67Z"/></svg>`;
-
-
-let allProducts = [];
-let activeCategory = "All";
-let searchTerm = "";
-
-function waLink(text) {
-  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
-}
-
-function genericGreeting() {
-  return `Hi ${STORE_NAME}! I'd like to know more about your seedlings.`;
-}
-
-function orderMessage(p) {
-  if (p.price == null) {
-    return `Hi! I'd like to enquire about:\n\n${p.name}\n\nCould you let me know the price and availability?`;
+(async()=>{try{const key="tiffas-cache-reset-v99";if(sessionStorage.getItem(key)!=="1"){sessionStorage.setItem(key,"1");let changed=false;if("serviceWorker" in navigator){const regs=await navigator.serviceWorker.getRegistrations();for(const reg of regs){changed=await reg.unregister()||changed;}}if("caches" in window){const keys=await caches.keys();if(keys.length){await Promise.all(keys.map(k=>caches.delete(k)));changed=true;}}if(changed){const u=new URL(location.href);u.searchParams.set("_tiffas_refresh",Date.now());location.replace(u.href);return;}}}catch(e){console.warn("FTKFAS cache reset skipped",e)}})();
+document.addEventListener("DOMContentLoaded", () => {
+  const C = window.FTKFAS_CONFIG || {};
+  const STORE_NAME = C.STORE_NAME || "FTKFAS BEAUTY AND COSMETICS";
+  const WHATSAPP = C.WHATSAPP_NUMBER || "254725679016";
+  const CATALOG_URL = C.CATALOG_URL || "catalog/products.json";
+  const SETTINGS_URL = C.SETTINGS_URL || "store-settings.json";
+  const DISCOUNTS_URL = C.DISCOUNTS_URL || "catalog/discounts.json";
+  let products = [];
+  let settings = {whatsappNumber:WHATSAPP,bankName:"",accountName:STORE_NAME,accountNumber:"",branch:"",swiftCode:"",paymentInstructions:"Use your order number as the transfer reference, then send proof of payment by WhatsApp.",currency:"KES"};
+  let category="All", query="", cart=[], discounts=[], appliedDiscount=null;
+  try{cart=JSON.parse(localStorage.getItem("farmtek_cart")||"[]");if(!Array.isArray(cart))cart=[];}catch(_){cart=[];}
+  const $=id=>document.getElementById(id);
+  const money=n=>`Ksh ${Number(n||0).toLocaleString("en-KE")}`;
+  const esc=s=>String(s??"").replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));
+  const wa=text=>`https://wa.me/${settings.whatsappNumber||WHATSAPP}?text=${encodeURIComponent(text)}`;
+  const saveCart=()=>{try{localStorage.setItem("farmtek_cart",JSON.stringify(cart));}catch(_){}};
+  const subtotal=()=>cart.reduce((sum,i)=>sum+Number(i.price||0)*Number(i.qty||0),0);
+  function normalizeDiscountCode(code){return String(code||"").trim().toUpperCase();}
+  function findDiscount(code){const key=normalizeDiscountCode(code), now=Date.now(), base=subtotal();return discounts.find(d=>{if(d.active===false)return false;if(normalizeDiscountCode(d.code)!==key)return false;if(d.expiresAt){const t=new Date(String(d.expiresAt).length<=10?String(d.expiresAt)+"T23:59:59":d.expiresAt).getTime();if(Number.isFinite(t)&&now>t)return false;}const limit=Number(d.usageLimit||0),used=Number(d.usedCount||0);if(limit>0&&used>=limit)return false;if(Number(d.minSubtotal||0)>base)return false;return true;})||null;}
+  function discountValue(d,base){if(!d)return 0;const value=Number(d.value||0);return d.type==="percent"?Math.min(base,Math.max(0,base*(value/100))):Math.min(base,Math.max(0,value));}
+  function quote(){const base=subtotal(),discount=appliedDiscount?discountValue(appliedDiscount,base):0;return{subtotal:base,discount,total:Math.max(0,base-discount)};}
+  function refreshCheckoutTotals(){const q=quote(),t=$("checkoutTotal"),r=$("discountRow"),a=$("discountAmount"),c=$("discountAppliedCode");if(t)t.textContent=money(q.total);if(r)r.hidden=q.discount<=0;if(a)a.textContent="- "+money(q.discount);if(c)c.textContent=appliedDiscount?"Discount ("+esc(appliedDiscount.code)+")":"Discount";}
+  if(["search","categories","count","grid","empty","cartItems","subtotal","cartBadge"].some(id=>!$(id)))return;
+  const assetVersion=Date.now();
+  function resolveAsset(p){if(!p)return"";if(/^(https?:|data:|blob:)/i.test(p))return p;const u=new URL(p.replace(/^\//,""),document.baseURI);u.searchParams.set("v",assetVersion);return u.href;}
+  function toast(msg){const el=$("toast");if(!el)return;el.textContent=msg;el.hidden=false;clearTimeout(toast.timer);toast.timer=setTimeout(()=>el.hidden=true,2400);}
+  function needsCustomerChoice(p){return /jibambe|avis|pony\s*tail|natural\s*locs|soft\s*dread|asad|body\s*spray/i.test(String(p&&p.name||""));}
+  function choicePrompt(p){var n=String(p&&p.name||"");return /jibambe|avis|pony\s*tail|natural\s*locs|soft\s*dread/i.test(n)?"Which braid / style / colour / number do you want?":"Which fragrance / variant / size do you want?";}
+  function choicePlaceholder(p){var n=String(p&&p.name||"");return /jibambe|avis|pony\s*tail|natural\s*locs|soft\s*dread/i.test(n)?"e.g. 1, 1B, 27, 33, 1/27, etc.":"e.g. fragrance, size or variant";}
+  function imageSearchUrl(p){
+    var raw=String((p&&p.imageQuery)||((p&&p.name)||"")).trim();
+    var n=String(p&&p.name||"").trim();
+    var u=n.toUpperCase().split(" ").filter(Boolean).join(" ");
+    var aliases={
+      "ROSE LEAF PONDS SMALL POWDER":"PONDS ROSE LEAF POWDER",
+      "HAIR EXTENSION BABY BUDS":"HAIR EXTENSION BABY BUDS CROCHET",
+      "KYLIE MAKE UP":"KYLIE COSMETICS MAKEUP",
+      "BLUE FR MEN":"BLUE FOR MEN SMART COLLECTION DEODORANT BODY SPRAY",
+      "POLO BLUE":"SMART COLLECTION POLO BLUE EAU DE PARFUM",
+      "POLO SPORT":"SMART COLLECTION POLO SPORT EAU DE PARFUM",
+      "RELATON POUR FEMME":"RASASI RELATION POUR FEMME",
+      "DR. MEINAIER SNAIL WHITENINGCREAM 50G":"DR MEINAIER SNAIL WHITENING CREAM 50G",
+      "DR. MEINAIER WHITENING SCRUB":"DR MEINAIER WHITENING SCRUB",
+      "BAMSI LEAVE IN TREATMENT":"BAMSI BABY LOVE LEAVE IN TREATMENT",
+      "BAMSI MENTHOL":"BAMSI MENTHOL HAIR TREATMENT",
+      "CHARM MAX QTEX":"CHARM MAX QTEX NAIL POLISH",
+      "K.NAIL PERFECTFIT":"K NAIL PERFECTFIT PRESS ON NAILS",
+      "HOBBY MARSH MALLOW":"HOBBY MARSHMALLOW SHOWER GEL",
+      "HOTTIE NEW YORK":"HOTTIE NEW YORK PERFUME",
+      "JM BLUE MIST":"JM BLUE MIST PERFUME"
+    };
+    var fixed=aliases[u]||u;
+    fixed=fixed.split("N/L").join("NICE & LOVELY").split("N&L").join("NICE & LOVELY").split("LTN").join("LOTION").split("H/FOOD").join("HAIR FOOD").split("TUMERIC").join("TURMERIC");
+    var q=raw&&raw!==n?raw:fixed+" product photo";
+    return "https://tse1.mm.bing.net/th?q="+encodeURIComponent(q);
   }
-  return `Hi! I'd like to order:\n\n${p.name}\nPrice: Ksh ${p.price.toLocaleString()}\n\nI'll pay via M-Pesa Paybill ${PAYBILL_BUSINESS}, Account ${PAYBILL_ACCOUNT} (${STORE_NAME}) — please confirm availability.`;
-}
-
-function escapeHtml(str) {
-  return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
-}
-
-function mediaHtml(p) {
-  if (p.image) return `<img src="${p.image}" alt="${escapeHtml(p.name)}" loading="lazy" width="300" height="300">`;
-  return CATEGORY_ICONS[p.category] || CATEGORY_ICONS["Mangoes"];
-}
-
-function priceHtml(p) {
-  if (p.price == null) return `<span class="card-price on-request">Price on request</span>`;
-  return `<span class="card-price">Ksh ${p.price.toLocaleString()}</span>`;
-}
-
-function cardHtml(p) {
-  const ctaLabel = p.price == null ? "Enquire on WhatsApp" : "Order on WhatsApp";
-  return `
-    <article class="card" data-product-id="${escapeHtml(p.id)}">
-      <div class="card-media">${mediaHtml(p)}</div>
-      <div class="card-body">
-        <p class="card-category">${escapeHtml(p.category)}</p>
-        <p class="card-name">${escapeHtml(p.name)}</p>
-        ${priceHtml(p)}
-        <a class="btn btn-order card-cta" href="${waLink(orderMessage(p))}" target="_blank" rel="noopener">
-          ${WHATSAPP_GLYPH.replace('viewBox="0 0 32 32"', 'viewBox="0 0 32 32" width="16" height="16"')} ${ctaLabel}
-        </a>
-      </div>
-    </article>`;
-}
-
-function render() {
-  const grid = document.getElementById("productGrid");
-  const empty = document.getElementById("emptyState");
-  const countEl = document.getElementById("resultCount");
-  const term = searchTerm.trim().toLowerCase();
-
-  const filtered = allProducts.filter((p) => {
-    const matchesCategory = activeCategory === "All" || p.category === activeCategory;
-    const matchesSearch = !term || p.name.toLowerCase().includes(term);
-    return matchesCategory && matchesSearch;
-  });
-
-  countEl.textContent = `Showing ${filtered.length} of ${allProducts.length} products`;
-
-  if (filtered.length === 0) {
-    grid.innerHTML = "";
-    grid.hidden = true;
-    empty.hidden = false;
-    document.getElementById("emptyQuery").textContent = searchTerm || "this category";
-  } else {
-    empty.hidden = true;
-    grid.hidden = false;
-    grid.innerHTML = filtered.map(cardHtml).join("");
-  }
-}
-
-function buildCategoryPills() {
-  const counts = {};
-  allProducts.forEach((p) => (counts[p.category] = (counts[p.category] || 0) + 1));
-  const cats = CATEGORY_ORDER.filter((c) => counts[c]);
-  const pillsHtml = [`<button class="pill active" data-cat="All">All (${allProducts.length})</button>`]
-    .concat(cats.map((c) => `<button class="pill" data-cat="${escapeHtml(c)}">${escapeHtml(c)} (${counts[c]})</button>`))
-    .join("");
-  const wrap = document.getElementById("categoryPills");
-  wrap.innerHTML = pillsHtml;
-  wrap.addEventListener("click", (e) => {
-    const btn = e.target.closest(".pill");
-    if (!btn) return;
-    activeCategory = btn.dataset.cat;
-    wrap.querySelectorAll(".pill").forEach((p) => p.classList.toggle("active", p === btn));
-    render();
-  });
-}
-
-function buildShelf() {
-  const withPhotos = allProducts.filter((p) => p.image);
-  const pool = (withPhotos.length >= 8 ? withPhotos : allProducts).slice(0, 14);
-  const tags = pool.map((p) => `
-      <div class="shelf-tag">
-        <div class="shelf-tag-media">${mediaHtml(p)}</div>
-        <div class="shelf-tag-name">${escapeHtml(p.name)}</div>
-        <div class="shelf-tag-price">${p.price == null ? "Ask price" : "Ksh " + p.price.toLocaleString()}</div>
-      </div>`).join("");
-  document.getElementById("shelfTrack").innerHTML = tags + tags;
-}
-
-function wireWhatsappLinks() {
-  const generic = waLink(genericGreeting());
-  ["topbarWhatsapp", "heroWhatsapp", "footerWhatsapp", "floatingWhatsapp", "locationWhatsapp"].forEach((id) => {
-    const el = document.getElementById(id);
-    if (el) el.href = generic;
-  });
-}
-
-function applyBranding() {
-  document.title = `${STORE_NAME} — Order on WhatsApp`;
-  document.querySelectorAll(".js-store-name").forEach((el) => (el.textContent = STORE_NAME));
-  document.querySelectorAll(".js-location-name").forEach((el) => (el.textContent = LOCATION_NAME));
-  document.querySelectorAll(".js-hours").forEach((el) => (el.textContent = LOCATION_HOURS));
-  document.querySelectorAll(".js-paybill-business").forEach((el) => (el.textContent = PAYBILL_BUSINESS));
-  document.querySelectorAll(".js-paybill-account").forEach((el) => (el.textContent = PAYBILL_ACCOUNT));
-  const mapFrame = document.getElementById("mapFrame");
-  if (mapFrame) mapFrame.src = MAPS_EMBED_URL;
-  const directionsLink = document.getElementById("directionsLink");
-  if (directionsLink) directionsLink.href = MAPS_DIRECTIONS_URL;
-}
-
-function wireCopyButtons() {
-  document.querySelectorAll("[data-copy]").forEach((btn) => {
-    const defaultLabel = btn.textContent;
-    btn.addEventListener("click", async () => {
-      try {
-        await navigator.clipboard.writeText(btn.dataset.copy);
-        btn.textContent = "Copied!";
-        btn.classList.add("copied");
-        setTimeout(() => {
-          btn.textContent = defaultLabel;
-          btn.classList.remove("copied");
-        }, 1800);
-      } catch (err) {
-        // Clipboard API unavailable — the number is already visible on the page.
-      }
-    });
-  });
-}
-
-function wireControls() {
-  document.getElementById("searchInput").addEventListener("input", (e) => {
-    searchTerm = e.target.value;
-    render();
-  });
-  document.getElementById("clearFilters").addEventListener("click", () => {
-    searchTerm = "";
-    activeCategory = "All";
-    document.getElementById("searchInput").value = "";
-    document.querySelectorAll(".pill").forEach((p) => p.classList.toggle("active", p.dataset.cat === "All"));
-    render();
-  });
-}
-
-async function init() {
-  applyBranding();
-  allProducts = Array.isArray(window.PRODUCTS) ? window.PRODUCTS : [];
-  document.getElementById("floatingWhatsapp").innerHTML = WHATSAPP_GLYPH;
-  document.getElementById("topbarWhatsapp").innerHTML = `${WHATSAPP_GLYPH.replace('viewBox="0 0 32 32"', 'viewBox="0 0 32 32" width="16" height="16"')} 0725 528 888`;
-  wireWhatsappLinks();
-  wireCopyButtons();
-  buildCategoryPills();
-  buildShelf();
-  wireControls();
+  function card(p){    var primary=p.image?resolveAsset(p.image):imageSearchUrl(p);    var fallback=p.fallbackImage?resolveAsset(p.fallbackImage):"";    var img=primary?"<img src=\"" + esc(primary) + "\" data-fallback=\"" + esc(fallback) + "\" alt=\"" + esc(p.name) + "\" loading=\"lazy\" onerror=\"if(this.dataset.fallback&&!this.dataset.triedFallback){this.dataset.triedFallback=\'1\';this.src=this.dataset.fallback;}else{this.style.display=\'none\';this.nextElementSibling.style.display=\'grid\';}\"><span class=\"placeholder\" style=\"display:none\">" + esc((p.name||"B").charAt(0)) + "</span>" : "<span class=\"placeholder\">" + esc((p.name||"B").charAt(0)) + "</span>";    var add=(p.price!=null&&p.inStock!==false)?"<button class=\"add\" data-add=\"" + esc(p.id) + "\">Add</button>":"<button class=\"add\" disabled>Out of stock</button>";    var description=p.description?"<p class=\"product-description\">" + esc(p.description) + "</p>":"";    var requestField=needsCustomerChoice(p)?"<label class=\"product-request\"><span>" + esc(choicePrompt(p)) + "</span><input type=\"text\" data-request placeholder=\"" + esc(choicePlaceholder(p)) + "\" autocomplete=\"off\"></label>":"";    return "<article class=\"card\"><div class=\"card-media\">" + img + "</div><div class=\"card-body\"><small>" + esc(p.category||"Beauty & Cosmetics") + "</small><h3>" + esc(p.name) + "</h3>" + description + requestField + "<strong>" + (p.price==null?"Price on request":money(p.price)) + "</strong><div class=\"card-actions\"><a class=\"mini-wa\" href=\"" + wa("Hi " + STORE_NAME + "! I would like to order " + p.name + ".") + "\" target=\"_blank\" rel=\"noopener\">WhatsApp</a>" + add + "</div></div></article>";  }
+  function render(){const term=query.trim().toLowerCase();const list=products.filter(p=>(category==="All"||p.category===category)&&(!term||String(p.name||"").toLowerCase().includes(term)||String(p.category||"").toLowerCase().includes(term)));$("count").textContent=`Showing ${list.length} of ${products.length} products`;$("grid").innerHTML=list.map(card).join("");$("empty").hidden=list.length!==0;}
+  function categories(){const cats=["All",...new Set(products.map(p=>p.category).filter(Boolean))];$("categories").innerHTML=cats.map(c=>`<button type="button" class="pill ${c===category?"active":""}" data-cat="${esc(c)}">${esc(c)}</button>`).join("");}
+  function renderCart(){$("cartBadge").hidden=cart.length===0;$("cartBadge").textContent=String(cart.reduce((s,i)=>s+Number(i.qty||0),0));$("subtotal").textContent=money(subtotal());$("cartItems").innerHTML=cart.length?cart.map(function(i){return "<div class=\"cart-item\"><div><b>"+esc(i.name)+"</b>"+(i.request?"<small>Request: "+esc(i.request)+"</small>":"")+"<small>"+money(i.price)+" × "+i.qty+"</small></div><div class=\"qty\"><button type=\"button\" data-dec=\""+esc(i.key||i.id)+"\">−</button><span>"+i.qty+"</span><button type=\"button\" data-inc=\""+esc(i.key||i.id)+"\">+</button></div></div>";}).join(""):"<div class=\"empty\">Your cart is empty.</div>";}
+  function openCart(){$("cartDrawer")?.classList.add("open");if($("drawerOverlay"))$("drawerOverlay").hidden=false;renderCart();}
+  function closeCart(){$("cartDrawer")?.classList.remove("open");if($("drawerOverlay"))$("drawerOverlay").hidden=true;}
+  function orderNumber(){const d=new Date(),p=n=>String(n).padStart(2,"0");return"FTK"+d.getFullYear()+p(d.getMonth()+1)+p(d.getDate())+p(d.getHours())+p(d.getMinutes())+p(d.getSeconds());}
+  function bankDetailsHtml(ref){const rows=[["Bank",settings.bankName],["Account name",settings.accountName],["Account number",settings.accountNumber],["Branch",settings.branch],["SWIFT / BIC",settings.swiftCode]].filter(([,v])=>v);return`<div class="bank-details">${rows.map(([k,v])=>`<div><span>${esc(k)}</span><b>${esc(v)}</b></div>`).join("")||"<p>Bank details have not been configured yet. Please contact FTKFAS on WhatsApp.</p>"}<div><span>Order reference</span><b>${esc(ref)}</b></div></div>`;}
+  function openCheckout(initialPayment="bank"){if(!cart.length)return toast("Your cart is empty.");const ref=orderNumber();$("modalOverlay").hidden=false;$("modalContent").innerHTML=`<h2 id="modalTitle">Checkout</h2><p class="checkout-kicker">Customer details, delivery and payment</p><label class="customer-field"><span>Full name</span><input id="customerName" type="text" placeholder="Your name" autocomplete="name"></label><label class="customer-field"><span>Phone / WhatsApp</span><input id="customerPhone" type="tel" placeholder="07xx xxx xxx" autocomplete="tel"></label><div class="checkout-pricing"><div><span>Subtotal</span><b>${money(subtotal())}</b></div><div id="discountRow" hidden><span id="discountAppliedCode">Discount</span><b id="discountAmount">- Ksh 0</b></div><div class="checkout-total"><span>Order total</span><b id="checkoutTotal">${money(subtotal())}</b></div></div><div class="discount-box"><label><span>Discount code</span><input id="discountCode" type="text" maxlength="40" placeholder="Enter discount code" autocomplete="off"></label><button id="applyDiscount" type="button" class="btn light">Apply code</button><small id="discountMessage" class="hint">Have a promo code? Enter it here.</small></div>${bankDetailsHtml(ref)}<div class="delivery-choice"><strong>How would you like to receive your order?</strong><label class="delivery-option"><input type="radio" name="deliveryMethod" value="home" checked><span><b>Home delivery</b><small>Use Bolt or a rider service. Delivery charges are arranged separately.</small></span></label><label class="delivery-option"><input type="radio" name="deliveryMethod" value="zillah"><span><b>Drop-off / collection — FTKFAS BEAUTY AND COSMETICS</b><small>Lower Kabete, near Zillah Stores.</small></span></label><label class="delivery-option"><input type="radio" name="deliveryMethod" value="uon"><span><b>Drop-off / collection — FTKFAS BEAUTY SHOP AND COSMETICS</b><small>Opposite University of Nairobi Lower Kabete Campus.</small></span></label></div><div id="deliveryAddressWrap" class="delivery-address show"><label>Home delivery location<textarea id="deliveryAddress" rows="3" placeholder="Enter your estate, building/house, street or landmark and phone/contact details for the rider"></textarea></label><p class="delivery-note">For home delivery, please provide enough location detail for the Bolt/rider service.</p></div><div class="payment-choice"><strong>Payment method</strong><label class="payment-option selected"><input type="radio" name="paymentMethod" value="bank" ${initialPayment==="bank"?"checked":""}><span><b>M-Pesa PayBill</b><small>Transfer the order total and use your order number as the reference.</small></span></label><label class="payment-option"><input type="radio" name="paymentMethod" value="pod" ${initialPayment==="pod"?"checked":""}><span><b>Pay on delivery</b><small>Pay when your order arrives. For collection, payment is made when you collect your order.</small></span></label></div><div id="podNote" class="pod-note" hidden><b>No advance payment required.</b><span>We will confirm the order on WhatsApp. Pay the rider when the order is delivered, or pay when collecting from the selected shop.</span></div><p class="hint">${esc(settings.paymentInstructions||"")}</p><div class="order-summary">${cart.map(i=>`<div><span>${esc(i.name)} × ${i.qty}${i.request?" — "+esc(i.request):""}</span><b>${money(Number(i.price||0)*Number(i.qty||0))}</b></div>`).join("")}</div><div class="actions-stack"><button id="copyPaymentModal" type="button" class="btn light full">Copy bank &amp; order details</button><button id="sendCheckoutOrder" type="button" class="btn whatsapp full">Send order on WhatsApp</button><button id="downloadOrderData" type="button" class="btn light full">Download order data</button><button id="printOrderReceipt" type="button" class="btn light full">Print receipt</button></div>`;const updateCheckout=()=>{const method=document.querySelector("input[name=deliveryMethod]:checked")?.value||"home";const payment=document.querySelector("input[name=paymentMethod]:checked")?.value||"bank";$("deliveryAddressWrap").classList.toggle("show",method==="home");const bank=document.querySelector("#modalContent .bank-details"),hint=document.querySelector("#modalContent .hint");if(bank)bank.hidden=payment!=="bank";if(hint)hint.hidden=payment!=="bank";$("podNote").hidden=payment!=="pod";document.querySelectorAll(".payment-option").forEach(el=>el.classList.toggle("selected",!!el.querySelector("input")?.checked));const copy=$("copyPaymentModal");if(copy)copy.textContent=payment==="bank"?"Copy M-Pesa & order details":"Copy order details";};document.querySelectorAll("input[name=deliveryMethod],input[name=paymentMethod]").forEach(el=>el.addEventListener("change",updateCheckout));if($("applyDiscount"))$("applyDiscount").onclick=()=>{const code=normalizeDiscountCode($("discountCode")?.value);if(!code){appliedDiscount=null;refreshCheckoutTotals();if($("discountMessage"))$("discountMessage").textContent="Enter a discount code.";return;}const d=findDiscount(code);if(!d){appliedDiscount=null;refreshCheckoutTotals();if($("discountMessage"))$("discountMessage").textContent="That discount code is invalid, expired, inactive, or its minimum spend has not been reached.";return;}appliedDiscount=d;refreshCheckoutTotals();if($("discountMessage"))$("discountMessage").textContent="Code "+d.code+" applied successfully.";};updateCheckout();refreshCheckoutTotals();$("copyPaymentModal").onclick=async()=>{const method=document.querySelector("input[name=deliveryMethod]:checked")?.value||"home";const payment=document.querySelector("input[name=paymentMethod]:checked")?.value||"bank";const label=method==="home"?"Home delivery — Bolt / rider service":method==="zillah"?"Drop-off / collection — FTKFAS BEAUTY AND COSMETICS, Lower Kabete near Zillah Stores":"Drop-off / collection — FTKFAS BEAUTY SHOP AND COSMETICS, opposite University of Nairobi Lower Kabete Campus";const address=method==="home"?($("deliveryAddress").value.trim()||"Not provided"):"";const text=[`Order reference: ${ref}`,`Total: ${money(subtotal())}`,`Fulfilment: ${label}`,address?`Delivery location: ${address}`:"",`Payment: ${payment==="pod"?"Pay on delivery / collection":"M-Pesa PayBill"}`,payment==="bank"&&settings.bankName?`Bank: ${settings.bankName}`:"",payment==="bank"&&settings.accountName?`Account name: ${settings.accountName}`:"",payment==="bank"&&settings.accountNumber?`Account number: ${settings.accountNumber}`:"",payment==="bank"&&settings.branch?`Branch: ${settings.branch}`:"",payment==="bank"&&settings.swiftCode?`SWIFT/BIC: ${settings.swiftCode}`:""].filter(Boolean).join("\n");try{await navigator.clipboard.writeText(text);toast("Order and delivery details copied");}catch(_){toast("Copy failed; use the details shown above.");}};$("sendCheckoutOrder").onclick=()=>{const q=quote();const method=document.querySelector("input[name=deliveryMethod]:checked")?.value||"home";const payment=document.querySelector("input[name=paymentMethod]:checked")?.value||"bank";const label=method==="home"?"Home delivery via Bolt / rider service":method==="zillah"?"Drop-off / collection at FTKFAS BEAUTY AND COSMETICS, Lower Kabete near Zillah Stores":"Drop-off / collection at FTKFAS BEAUTY SHOP AND COSMETICS, opposite University of Nairobi Lower Kabete Campus";const address=method==="home"?($("deliveryAddress").value.trim()||"Not provided"):"";const paymentLine=payment==="pod"?"Payment: PAY ON DELIVERY — no advance payment required.":"Payment: M-PESA PAYBILL — use order reference "+ref+".";const msg=`Hi ${STORE_NAME}! I want to place order ${ref}.\n\n${cart.map(i=>`• ${i.name} × ${i.qty}${i.request?" — "+i.request:""} — ${money(i.price*i.qty)}`).join("\n")}\n\nSubtotal: ${money(q.subtotal)}${q.discount>0?`\nDiscount (${appliedDiscount.code}): -${money(q.discount)}`:""}\n\nTotal: ${money(q.total)}\n\nFulfilment: ${label}${address?`\nDelivery location: ${address}`:""}\n\n${paymentLine}`;const customerName=$("customerName").value.trim(),customerPhone=$("customerPhone").value.trim();if(!customerName||!customerPhone){toast("Please enter your name and phone number.");return;}const order={orderNumber:ref,createdAt:new Date().toISOString(),customer:{name:customerName,phone:customerPhone},items:cart.map(i=>({id:i.id,name:i.name,price:Number(i.price||0),qty:Number(i.qty||0),request:i.request||""})),subtotal:q.subtotal,discount:q.discount,discountCode:appliedDiscount?.code||"",total:q.total,deliveryMethod:label,deliveryAddress:address,paymentMethod:payment==="pod"?"Pay on delivery":"M-Pesa PayBill",paymentStatus:payment==="pod"?"Unpaid":"Pending verification",status:"Pending",store:STORE_NAME,whatsappNumber:settings.whatsappNumber||WHATSAPP,bank:{bankName:settings.bankName||"",accountName:settings.accountName||"",accountNumber:settings.accountNumber||"",branch:settings.branch||"",swiftCode:settings.swiftCode||""}};try{localStorage.setItem("farmtek_customer_last_order",JSON.stringify(order));}catch(_){}window.open(wa(msg),"_blank","noopener");};$("downloadOrderData").onclick=()=>{const q=quote();const customerName=$("customerName").value.trim(),customerPhone=$("customerPhone").value.trim();if(!customerName||!customerPhone){toast("Please enter your name and phone number.");return;}const order={orderNumber:ref,createdAt:new Date().toISOString(),customer:{name:customerName,phone:customerPhone},items:cart.map(i=>({id:i.id,name:i.name,price:Number(i.price||0),qty:Number(i.qty||0),request:i.request||""})),subtotal:q.subtotal,discount:q.discount,discountCode:appliedDiscount?.code||"",total:q.total,deliveryMethod:document.querySelector("input[name=deliveryMethod]:checked")?.value||"home",deliveryAddress:$( "deliveryAddress")?.value.trim()||"",paymentMethod:document.querySelector("input[name=paymentMethod]:checked")?.value==="pod"?"Pay on delivery":"M-Pesa PayBill",paymentStatus:"Unpaid",status:"Pending",store:STORE_NAME};const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(order,null,2)],{type:"application/json"}));a.download=order.orderNumber+".json";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);toast("Order data downloaded.");};$("printOrderReceipt").onclick=()=>{const q=quote();const customerName=$("customerName").value.trim(),customerPhone=$("customerPhone").value.trim();if(!customerName||!customerPhone){toast("Please enter your name and phone number.");return;}const w=window.open("","_blank");if(!w){toast("Please allow pop-ups to print your receipt.");return;}const items=cart.map(i=>"<tr><td>"+esc(i.name)+(i.request?"<br><small>"+esc(i.request)+"</small>":"")+"</td><td>"+i.qty+"</td><td>"+money(i.price*i.qty)+"</td></tr>").join("");w.document.write("<!doctype html><html><head><title>FTKFAS Receipt "+ref+"</title><style>body{font-family:Arial;max-width:680px;margin:30px auto;color:#111}h1{text-align:center;font-size:22px}table{width:100%;border-collapse:collapse;margin-top:18px}th,td{padding:8px;border-bottom:1px solid #ddd;text-align:left}.total{display:flex;justify-content:space-between;border-top:2px solid #111;margin-top:12px;padding-top:10px;font-weight:800}</style></head><body><h1>"+esc(STORE_NAME)+"</h1><p style=\"text-align:center\">Customer Receipt</p><p><b>Order:</b> "+esc(ref)+"<br><b>Date:</b> "+new Date().toLocaleString("en-KE")+"<br><b>Customer:</b> "+esc(customerName)+"<br><b>Phone:</b> "+esc(customerPhone)+"</p><table><thead><tr><th>Item</th><th>Qty</th><th>Amount</th></tr></thead><tbody>"+items+"</tbody></table><div class=\"total\"><span>Subtotal</span><span>"+money(q.subtotal)+"</span></div>"+(q.discount>0?"<div class=\"total\"><span>Discount ("+esc(appliedDiscount.code)+")</span><span>- "+money(q.discount)+"</span></div>":"")+"<div class=\"total\"><span>Total</span><span>"+money(q.total)+"</span></div><p><b>Payment:</b> "+esc(payment==="pod"?"Pay on delivery":"M-Pesa PayBill")+"</p><p>Thank you for shopping with "+esc(STORE_NAME)+".</p><script>window.onload=()=>window.print()<\/script></body></html>");w.document.close();};}
+  function closeModal(){if($("modalOverlay"))$("modalOverlay").hidden=true;}
+  function cartMessage(){return`Hi ${STORE_NAME}! I'd like to order:\n\n${cart.map(i=>`• ${i.name} × ${i.qty} — ${money(i.price*i.qty)}`).join("\n")}\n\nTotal: ${money(subtotal())}`;}
+  $("search").addEventListener("input",e=>{query=e.target.value;render();});
+  $("categories").addEventListener("click",e=>{const b=e.target.closest("[data-cat]");if(!b)return;category=b.dataset.cat;categories();render();});
+  $("grid").addEventListener("click",e=>{const b=e.target.closest("[data-add]");if(!b||b.disabled)return;const p=products.find(x=>String(x.id)===String(b.dataset.add));if(!p)return;const cardEl=b.closest(".card");const field=cardEl&&cardEl.querySelector("[data-request]");const request=field?field.value.trim():"";if(needsCustomerChoice(p)&&!request){if(field)field.focus();toast("Please tell us which braid, fragrance or variant you want.");return;}const key=String(p.id)+"|"+request.toLowerCase();const i=cart.find(x=>String(x.key||x.id)===key);i?i.qty++:cart.push({key:key,id:p.id,name:p.name,price:p.price,qty:1,request:request});saveCart();renderCart();if(field)field.value="";toast("Added to cart");});
+  $("cartItems").addEventListener("click",e=>{const inc=e.target.closest("[data-inc]"),dec=e.target.closest("[data-dec]"),key=(inc||dec)?.dataset[inc?"inc":"dec"];if(!key)return;const i=cart.find(x=>String(x.key||x.id)===String(key));if(!i)return;i.qty+=inc?1:-1;if(i.qty<1)cart=cart.filter(x=>String(x.key||x.id)!==String(key));saveCart();renderCart();});
+  $("cartOpen")?.addEventListener("click",openCart);$("cartClose")?.addEventListener("click",closeCart);$("drawerOverlay")?.addEventListener("click",closeCart);$("checkout")?.addEventListener("click",()=>{closeCart();openCheckout("bank");});$("checkoutPod")?.addEventListener("click",()=>{closeCart();openCheckout("pod");});$("modalClose")?.addEventListener("click",closeModal);$("modalOverlay")?.addEventListener("click",e=>{if(e.target===$("modalOverlay"))closeModal();});$("cartWhatsapp")?.addEventListener("click",()=>window.open(wa(cartMessage()),"_blank","noopener"));
+  $("copyBank")?.addEventListener("click",async()=>{const text=[settings.bankName,settings.accountName,settings.accountNumber,settings.branch].filter(Boolean).join("\n");if(!text)return toast("Bank details are not configured yet.");try{await navigator.clipboard.writeText(text);toast("Bank details copied");}catch(_){toast("Copy failed; use checkout to view details.");}});
+  ["topWhatsapp","heroWhatsapp","footerWhatsapp"].forEach(id=>{const el=$(id);if(el){el.href=wa(`Hi ${STORE_NAME}! I'd like to know more about your products.`);if(id==="footerWhatsapp")el.textContent="0725 679 016";}});
+  function updateBankSummary(){$("bankHeroName").textContent=settings.bankName||"M-Pesa PayBill";$("bankHeroAccount").textContent=settings.accountNumber||"Set in Admin";$("bankStripName").textContent=settings.bankName?`${settings.bankName} • ${settings.accountName||""}`:"Payment details available at checkout";$("bankFooter").textContent=settings.bankName?`${settings.bankName} • A/C ${settings.accountNumber||"available at checkout"}`:"M-Pesa PayBill details available at checkout";}
+  const backTop=$("backToTop");window.addEventListener("scroll",()=>{if(backTop)backTop.classList.toggle("show",window.scrollY>500)},{passive:true});if(backTop)backTop.addEventListener("click",()=>window.scrollTo({top:0,behavior:"smooth"}));
+  const embeddedProducts=Array.isArray(window.FTKFAS_PRODUCTS)?window.FTKFAS_PRODUCTS:[];
+  products=embeddedProducts;
+  categories();
   render();
-}
+  renderCart();
+  updateBankSummary();
+  Promise.all([
+    fetch(CATALOG_URL+"?v="+Date.now(),{cache:"no-store"}).then(function(r){return r.ok?r.json():[];}).catch(function(){return [];})
+  ]).then(function(results){
+    var live=results[0];
+    if(Array.isArray(live)&&live.length){products=live;categories();render();renderCart();}
+  });
+  fetch(SETTINGS_URL+"?v="+Date.now(),{cache:"no-store"}).then(function(r){return r.ok?r.json():{};}).then(function(store){settings={...settings,...(store||{})};updateBankSummary();}).catch(function(e){console.warn("Store settings unavailable; catalogue remains available.",e);});
+  fetch(DISCOUNTS_URL+"?v="+Date.now(),{cache:"no-store"}).then(function(r){return r.ok?r.json():[];}).then(function(list){discounts=Array.isArray(list)?list:[];}).catch(function(e){console.warn("Discount codes unavailable.",e);});
 
-init();
+});
