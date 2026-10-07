@@ -30,7 +30,33 @@ async function loadOnline(){status("Loading Farmtek09 catalogue...");const rawBa
 async function loadOffline(){const s=await dbGet();if(!s?.products?.length)throw Error("No saved offline catalogue is available on this device yet.");products=s.products;settings=s.settings||{};deletedIds=new Set(s.deletedIds||[]);offlineDirty=!!s.offlineDirty;settingsDirty=!!s.settingsDirty;showApp();status("Offline copy loaded. Changes stay on this device until synced.")}
 async function saveOffline(msg){offlineDirty=true;await saveState(true);status(msg||"Saved on this device. Changes are waiting to sync.");updateConnection()}
 async function publishCatalogue(){if(!navigator.onLine){await saveOffline("Internet unavailable. Catalogue saved offline.");return}if(!token){throw Error("Connect to GitHub before publishing changes.");}status("Syncing latest catalogue...");const f=await getFile("catalog/products.json"),remote=JSON.parse(f.content),localById=new Map(products.map(p=>[String(p.id),p])),merged=[];for(const p of remote){const id=String(p.id);if(deletedIds.has(id))continue;merged.push(localById.has(id)?localById.get(id):p);localById.delete(id)}for(const p of localById.values())merged.push(p);products=merged;await putFile("catalog/products.json",JSON.stringify(products,null,2),f.sha,"Update FARMTEK09 product catalogue");deletedIds=new Set();offlineDirty=false;await saveState(false);draw();status("Catalogue synchronized: "+products.length+" products.");updateConnection()}
-async function saveSettingsOnline(){settings={...settings,bankName:$("bankName").value.trim(),accountName:$("accountName").value.trim(),accountNumber:$("accountNumber").value.trim(),branch:$("branch").value.trim(),swiftCode:$("swiftCode").value.trim(),whatsappNumber:$("waNumber").value.trim(),paymentInstructions:$("paymentInstructions").value.trim(),cloudinaryCloudName:$("cloudinaryCloudName").value.trim(),cloudinaryUploadPreset:$("cloudinaryUploadPreset").value.trim()};if(!navigator.onLine||!token){settingsDirty=true;return saveOffline("Settings saved offline.")}status("Saving store settings...");const f=await getFile("store-settings.json");await putFile("store-settings.json",JSON.stringify(settings,null,2),f.sha,"Update FARMTEK09 store settings");settingsDirty=false;await saveState(false);fillSettings();status("Store settings saved online.");updateConnection()}
+async function saveSettingsOnline(){
+settings={...settings,bankName:$("bankName").value.trim(),accountName:$("accountName").value.trim(),accountNumber:$("accountNumber").value.trim(),branch:$("branch").value.trim(),swiftCode:$("swiftCode").value.trim(),whatsappNumber:$("waNumber").value.trim(),paymentInstructions:$("paymentInstructions").value.trim(),cloudinaryCloudName:$("cloudinaryCloudName").value.trim(),cloudinaryUploadPreset:$("cloudinaryUploadPreset").value.trim()};
+if(!navigator.onLine||!token){settingsDirty=true;await saveOffline("Settings saved offline. Connect to GitHub to publish them.");return}
+status("Saving store settings...");
+let lastError=null;
+for(let attempt=1;attempt<=2;attempt++){
+  try{
+    const f=await getFile("store-settings.json");
+    const latestSha=f.sha;
+    const payload=JSON.stringify(settings,null,2);
+    await putFile("store-settings.json",payload,latestSha,"Update FARMTEK09 store settings");
+    settingsDirty=false;
+    await saveState(false);
+    fillSettings();
+    status("Store settings saved online.");
+    updateConnection();
+    return;
+  }catch(e){
+    lastError=e;
+    if(attempt===1 && /409|does not match|sha|conflict/i.test(String(e?.message||e))) continue;
+    break;
+  }
+}
+settingsDirty=true;
+await dbPut({...(await dbGet().catch(()=>null)||{}),products,settings,deletedIds:[...deletedIds],offlineDirty,settingsDirty,rememberDevice:$("rememberDevice")?.checked!==false,token:$("rememberDevice")?.checked!==false?token:"",updatedAt:new Date().toISOString()});
+throw Error("GitHub could not save store-settings.json: "+(lastError?.message||lastError||"unknown error"));
+}
 $("login")?.addEventListener("click",async()=>{const v=$("token")?.value.trim();if(v)token=v;if(!token)return loginStatus("Paste your GitHub fine-grained token.",true);loginStatus("Checking GitHub access...");try{const r=await github("/repos/"+REPO);if(!r.permissions?.push)throw Error("This token does not have write access to the repository.");sessionStorage.setItem("farmtek_admin_token",token);if($("rememberDevice")?.checked)await dbPut({...((await dbGet().catch(()=>null))||{}),token,rememberDevice:true});showApp();await loadOnline()}catch(e){loginStatus(e.message,true)}});
 $("offlineMode")?.addEventListener("click",async()=>{try{await loadOffline()}catch(e){loginStatus(e.message,true)}});
 $("logout")?.addEventListener("click",()=>{sessionStorage.removeItem("farmtek_admin_token");token="";location.reload()});
