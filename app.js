@@ -66,7 +66,7 @@ function priceHtml(p) {
 function cardHtml(p) {
   const ctaLabel = p.price == null ? "Enquire on WhatsApp" : "Order on WhatsApp";
   return `
-    <article class="card">
+    <article class="card" data-product-id="${escapeHtml(p.id)}">
       <div class="card-media">${mediaHtml(p)}</div>
       <div class="card-body">
         <p class="card-category">${escapeHtml(p.category)}</p>
