@@ -7,3 +7,9 @@
 .admin-logo{width:96px!important;height:96px!important;object-fit:contain!important;object-position:center!important;background:transparent!important;border:0!important;border-radius:0!important}
 .top{min-height:104px!important}
 @media(max-width:700px){.admin-logo{width:82px!important;height:82px!important}.top{min-height:92px!important}}
+
+/* FARMTEK09 shared logo */
+.admin-brand{align-items:center!important}
+.admin-logo{width:96px!important;height:96px!important;object-fit:contain!important;object-position:center!important;background:transparent!important;border:0!important;border-radius:0!important}
+.top{min-height:104px!important}
+@media(max-width:700px){.admin-logo{width:82px!important;height:82px!important}.top{min-height:92px!important}}
