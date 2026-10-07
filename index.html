@@ -15,7 +15,13 @@
   <header class="topbar">
     <div class="topbar-inner">
       <span class="brand">FARMTEK09 CENTRE</span>
-      <a class="topbar-whatsapp" id="topbarWhatsapp" href="#" target="_blank" rel="noopener"></a>
+      <div class="topbar-actions">
+        <button type="button" id="cartButton" class="topbar-cart" aria-label="View cart">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/><path d="M2.5 3h2l2.4 12.4a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.6L21 7H6"/></svg>
+          <span id="cartBadge" class="cart-badge" hidden>0</span>
+        </button>
+        <a class="topbar-whatsapp" id="topbarWhatsapp" href="#" target="_blank" rel="noopener"></a>
+      </div>
     </div>
   </header>
 
@@ -101,6 +107,26 @@
   </footer>
 
   <a href="#" id="floatingWhatsapp" class="floating-whatsapp" target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp"></a>
+
+  <div id="cartOverlay" class="cart-overlay" hidden>
+    <div class="cart-panel" role="dialog" aria-modal="true" aria-label="Your cart">
+      <div class="cart-header">
+        <h3>Your Order</h3>
+        <button type="button" id="cartClose" class="cart-close" aria-label="Close cart">✕</button>
+      </div>
+      <div id="cartBody" class="cart-body"></div>
+      <div id="cartFooter" class="cart-footer" hidden>
+        <div class="cart-total-row">
+          <span>Total</span>
+          <span id="cartTotal">Ksh 0</span>
+        </div>
+        <button type="button" id="checkoutBtn" class="btn btn-order cart-checkout-btn">
+          Checkout via WhatsApp
+        </button>
+        <p class="pay-note">You'll pay via M-Pesa Paybill <span class="js-paybill-business"></span>, Account <span class="js-paybill-account"></span> after confirming on WhatsApp.</p>
+      </div>
+    </div>
+  </div>
 
   <script src="products.js"></script>
   <script src="app.js"></script>
