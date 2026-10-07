@@ -1,13 +1,13 @@
 (()=>{
 const KEY="farmtek_discount_ui";let codes=[],editing=-1;
 const q=id=>document.getElementById(id);
-const ctx=()=>window.TIFFAS_ADMIN_CONTEXT;
+const ctx=()=>window.FARMTEK09_ADMIN_CONTEXT;
 const esc=s=>String(s??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
 const money=n=>"Ksh "+Number(n||0).toLocaleString("en-KE",{maximumFractionDigits:2});
 const norm=s=>String(s||"").trim().toUpperCase().replace(/\s+/g,"-");
 function codeDate(v){return v?new Date(String(v).length<=10?String(v)+"T23:59:59":v):null}
 function statusText(x){const d=codeDate(x.expiresAt);if(x.active===false)return"Inactive";if(d&&d.getTime()<Date.now())return"Expired";return"Active";}
-function randomCode(){const chars="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";let r="FARM-";for(let i=0;i<6;i++)r+=chars[Math.floor(Math.random()*chars.length)];return r;}
+function randomCode(){const chars="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";let r="FARMTEK09-";for(let i=0;i<6;i++)r+=chars[Math.floor(Math.random()*chars.length)];return r;}
 function defaults(){q("discountCode").value=randomCode();q("discountType").value="percent";q("discountValue").value="10";q("discountMin").value="0";q("discountUsage").value="0";const d=new Date();d.setDate(d.getDate()+30);q("discountExpiry").value=d.toISOString().slice(0,10);q("discountActive").checked=true;editing=-1;q("discountSave").textContent="Create discount";q("discountCancel").hidden=true;}
 function render(){const body=q("discountRows"),empty=q("discountEmpty");if(!body)return;body.textContent="";codes.forEach((x,i)=>{const tr=document.createElement("tr");const td1=document.createElement("td");td1.innerHTML="<b>"+esc(x.code)+"</b><small>"+esc(x.id||"")+"</small>";const td2=document.createElement("td");td2.textContent=x.type==="percent"?String(x.value||0)+"%":money(x.value);const td3=document.createElement("td");td3.textContent=money(x.minSubtotal||0);const td4=document.createElement("td");td4.textContent=Number(x.usageLimit||0)>0?String(Number(x.usedCount||0))+" / "+String(Number(x.usageLimit)):String(Number(x.usedCount||0))+" used";const td5=document.createElement("td");td5.textContent=x.expiresAt||"—";const td6=document.createElement("td");td6.textContent=statusText(x);const td7=document.createElement("td");td7.innerHTML="<div class=\"actions\"><button class=\"btn light\" data-discount-edit=\""+i+"\">Edit</button><button class=\"btn light\" data-discount-toggle=\""+i+"\">"+(x.active===false?"Activate":"Deactivate")+"</button><button class=\"btn danger\" data-discount-delete=\""+i+"\">Delete</button></div>";[td1,td2,td3,td4,td5,td6,td7].forEach(td=>tr.appendChild(td));body.appendChild(tr);});empty.hidden=codes.length>0;}
 async function load(){const c=ctx();if(!c?.getFile)throw Error("Admin connection is not ready. Connect to GitHub first.");const f=await c.getFile("catalog/discounts.json");try{codes=JSON.parse(f.content||"[]");}catch(_){codes=[];}if(!Array.isArray(codes))codes=[];render();c.setStatus?.("Discount codes loaded: "+codes.length);}
