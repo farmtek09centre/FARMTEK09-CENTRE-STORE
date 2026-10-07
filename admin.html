@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Farmtek09 Admin</title><link rel="stylesheet" href="admin.css">
+</head>
+<body>
+<header class="top"><div><b>FARMTEK09</b><span>ADMIN STORE</span></div><a href="index.html">View Customer Store ↗</a></header>
+<main>
+<section id="login" class="panel">
+<h1>GitHub Admin Access</h1>
+<p>This dashboard is GitHub-only. Your access token is used in your browser for GitHub Contents API requests and is not written into the repository.</p>
+<label>GitHub Personal Access Token<input id="token" type="password" placeholder="github_pat_..." autocomplete="off"></label>
+<label>Repository<input id="repo" value="farmtek09centre/FARMTEK09-CENTRE-STORE"></label>
+<button id="connect">Connect to GitHub</button>
+<p class="hint">Use a fine-grained token with <b>Contents: Read and write</b> for this repository. Never paste the token into HTML or commit it.</p>
+<div id="login-status"></div>
+</section>
+
+<section id="dashboard" hidden>
+<div class="dash-head"><div><h1>Store Catalogue</h1><p>Changes are committed directly to <code>main/products.js</code> and become available to customers through GitHub Pages.</p></div><button id="new">+ Add Product</button></div>
+<div id="status"></div>
+<div id="stats"></div>
+<div class="table-wrap"><table><thead><tr><th>Image</th><th>Product</th><th>Price (KES)</th><th>Stock</th><th>Unit</th><th>Actions</th></tr></thead><tbody id="rows"></tbody></table></div>
+<div class="security">🔒 Token remains in this browser session only. Render is not modified or deleted by this dashboard.</div>
+</section>
+</main>
+<div id="modal" class="modal" hidden><form id="product-form" class="modal-card">
+<button type="button" id="close" class="x">×</button><h2 id="modal-title">Add Product</h2>
+<input type="hidden" id="old-id">
+<label>Product ID<input id="pid" required pattern="[a-z0-9-]+"></label>
+<label>Name<input id="pname" required></label>
+<label>Price (KES)<input id="price" type="number" min="0" required></label>
+<label>Stock<input id="stock" type="number" min="0" required></label>
+<label>Unit<input id="unit" value="seedling" required></label>
+<label>Image URL<input id="image" type="url" required></label>
+<label>Description<textarea id="description" rows="3"></textarea></label>
+<div class="modal-actions"><button type="button" class="secondary" id="cancel">Cancel</button><button type="submit">Save to GitHub</button></div>
+</form></div>
+<script src="admin.js"></script>
+</body></html>
