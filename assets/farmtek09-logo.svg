@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1050" role="img" aria-labelledby="title desc">
+<title id="title">FARMTEK09</title><desc id="desc">Green agricultural logo with banana leaf, seedlings, fields and FARMTEK09 wordmark.</desc>
+<defs>
+ <linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0b5d2a"/><stop offset=".55" stop-color="#29a63a"/><stop offset="1" stop-color="#79d51c"/></linearGradient>
+ <linearGradient id="g2" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#0a4b24"/><stop offset="1" stop-color="#6fd51d"/></linearGradient>
+</defs>
+<g fill="none" stroke="url(#g)" stroke-linecap="round" stroke-linejoin="round">
+ <path d="M245 375c40-160 145-250 355-250 212 0 326 104 356 276" stroke-width="25"/>
+ <path d="M300 595c122-82 318-105 525-33 35 12 68 27 100 45" stroke-width="26"/>
+ <path d="M240 675c205-96 488-104 717-9" stroke-width="38"/>
+ <path d="M300 746c184-72 416-72 608-9" stroke-width="34"/>
+</g>
+<g fill="url(#g2)">
+ <path d="M465 590c-5-132 5-260 71-362 43 81 53 190 18 299-16 47-48 81-89 63z"/>
+ <path d="M570 578c31-121 93-211 186-261 3 103-30 197-107 254-30 22-58 27-79 7z"/>
+ <path d="M402 561c-55-58-87-125-88-201 73 16 133 61 165 119 12 23 9 49-7 69-17 20-43 28-70 13z"/>
+ <path d="M681 620c6-72 38-122 96-155 11 59-6 117-49 152-17 14-34 16-47 3z"/>
+ <path d="M765 635c16-49 46-80 91-98 2 39-15 77-48 98-15 10-30 10-43 0z"/>
+</g>
+<g fill="none" stroke="#0b5d2a" stroke-width="18">
+ <path d="M535 594c2-111 7-226 25-309"/>
+ <path d="M594 576c34-86 91-167 160-215"/>
+ <path d="M475 570c-48-46-82-101-114-174"/>
+ <path d="M725 621c9-47 29-91 60-124"/>
+ <path d="M805 632c15-35 31-58 52-80"/>
+</g>
+<g font-family="Arial,Helvetica,sans-serif" font-weight="900" text-anchor="middle">
+ <text x="600" y="850" font-size="145" letter-spacing="2" fill="#0b5d2a">FARM<tspan fill="#79d51c">TEK09</tspan></text>
+ <path d="M150 888h180M870 888h180" stroke="#0b5d2a" stroke-width="8"/>
+ <text x="600" y="916" font-size="27" letter-spacing="2" fill="#0b5d2a">QUALITY SEEDLINGS • BETTER HARVESTS • A GREENER FUTURE</text>
+</g>
+</svg>
