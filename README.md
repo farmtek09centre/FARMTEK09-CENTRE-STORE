@@ -4,12 +4,12 @@ FARMTEK09 CENTRE's customer storefront and catalogue admin panel.
 
 ## Website
 
-The static website is published with GitHub Pages from the `main` branch.
+The repository is prepared to publish the static website with GitHub Pages from the `main` branch. The target URLs below become live after the first successful deployment.
 
 - Customer storefront: https://farmtek09centre.github.io/FARMTEK09-CENTRE-STORE/
 - Admin panel: https://farmtek09centre.github.io/FARMTEK09-CENTRE-STORE/admin.html
 
-To activate the first deployment, open **Settings → Pages** in this repository and set **Build and deployment → Source** to **GitHub Actions**. The workflow in `.github/workflows/deploy-pages.yml` then publishes the site. Every push to `main` triggers a new deployment.
+To activate the first deployment, open **Settings → Pages** in this repository and set **Build and deployment → Source** to **GitHub Actions**. The workflow in `.github/workflows/deploy-pages.yml` publishes the site. After activation, every push to `main` triggers a new deployment.
 
 The deployment includes the static storefront, catalogue JSON, store settings, admin scripts, logo/assets and uploaded product images. It does not publish the Node API source as part of the Pages site.
 
